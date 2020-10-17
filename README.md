@@ -17,6 +17,7 @@
 1. Teha minimaalne kontroll endpointidele saadetava info kontrollimiseks - kas on olemas, kas vastab mingitele nõuetele jne.
 1. Hoia oma kood alusest peale Githubis - kindlasti kasuta ka .gitignore (Node template) faili.
 1. Jaga oma projekti Githubi linki õppejõuga.
+1. Ole valmis järgmises loengus oma tehtut tutvustama
 
 #### Mõned märkused loengust:
 * Postmanist body saatmisel (POST, PUT, DELETE päringute tegemisel) märgi 'raw' ja siis 'JSON'
@@ -24,6 +25,7 @@
 * Praegu kasutame andmebaasi asemel lihtsalt massiive, et alguses oleks lihtsam - ei ole ideaalne lahendus, kuid testimiseks kõlbab.
 * Ternary operator: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator
 * Kui kontrollid näiteks id väärtust, kas see on tõene või väär, siis 0 väärtuse puhul loetakse see vääraks.
+* Me teeme ainult API-t, me ei tee frontendi :)
 
 #### Esimeses loengus viidatud lingid
 * https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
