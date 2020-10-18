@@ -43,6 +43,10 @@
   * 404 - Not Found
   * **Serveri vead**
   * 500 - Internal Server Error
+  
+* .gitignore fail - fail, milles kirjeldatakse failid ja kaustad, mida ei soovita üles laadida koodihalduskeskkonda
+  * Node projektide puhul ei ole vaja üles laadida node_modules kausta, kuna see on tihti üsna suuremahuline ja seda on lihtne uuesti taasluua (npm install)
+  * Githubi poolt loodud node .gitignore faili näidis: https://github.com/mrttlu/esimene/blob/main/.gitignore
 
 ## Esimeses loengus tegime:
 
