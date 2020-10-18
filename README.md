@@ -44,6 +44,27 @@
   * **Serveri vead**
   * 500 - Internal Server Error
   
+* Selleks, et alustada projekti nii, et see oleks kohe alguses Githubis, siis soovitan teha nii:
+ 1. Logi Githubi sisse
+ 1. Vajuta Repositories nuppu
+ 1. Vajuta rohelist New nuppu
+ 1. Pane repositooriumile nimi (Repository name)
+ 1. Vali Private või Public
+ 1. Pane linnuke Add a README file ette
+ 1. Pane linnuke Add .gitignore ette
+ 1. Vali .gitignore template: Node
+ 1. Vajuta Create Repository nuppu
+ 1. Avanenud lehel vajuta rohelist Code nuppu ja kopeeri sealt repositooriumi link (näit: https://github.com/mrttlu/test.git)
+ 1. Mine oma arvutis terminalis (command promptis) kausta, kuhu soovid projekti kausta tekitada
+ 1. Kirjuta: git clone repositooriumi link (git clone https://github.com/mrttlu/test.git) ja vajuta enter klahvi
+ 1. Võid loodud kausta hakata koodi kirjutama 
+ 
+* Kirjutatud koodi githubi laadimine:
+  * terminalis (command promptis) kirjuta:
+  * git add .
+  * git commit -m 'Kirjeldus selle kohta, mida vahepeal teinud oled vms'
+  * git push
+  
 * .gitignore fail - fail, milles kirjeldatakse failid ja kaustad, mida ei soovita üles laadida koodihalduskeskkonda
   * Node projektide puhul ei ole vaja üles laadida node_modules kausta, kuna see on tihti üsna suuremahuline ja seda on lihtne uuesti taasluua (npm install)
   * Githubi poolt loodud node .gitignore faili näidis: https://github.com/mrttlu/esimene/blob/main/.gitignore
