@@ -1,4 +1,4 @@
-# Programmeerimine II tunnis tehtu
+# Programmeerimine II loengutes tehtu
 
 ##  Alustuseks
 * NodeJS https://nodejs.org/en/
