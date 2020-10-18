@@ -1,12 +1,26 @@
 # Programmeerimine II tunnis tehtu
 
-## 
-* NodeJS
-  * 
-* NPM
+##  Alustuseks
+* NodeJS https://nodejs.org/en/
+  * Serveris töötav javascript
+  * Tasuta
+  * Asünkroonne ja sündmustepõhine
+  * Ühelõimeline, kuid hästi skaleeruv
+  * https://www.tutorialspoint.com/nodejs/nodejs_introduction.htm
+* NPM - Node Package Manager
+  * Online repositoorium Node.js projektide jaoks http://npmjs.org/
+  * Käsurealt kasutatav utiliit nimetatud repositooriumiga suhtlemiseks (pakkide paigaldamiseks, versioonide ja sõltuvuste haldamiseks)
+  * NPM-i käsud https://docs.npmjs.com/cli-documentation/cli
+  * package.json - fail, mis sisaldab projekti kohta informatsiooni (näiteks projekti nimi, sõltuvused jne) https://nodejs.org/en/knowledge/getting-started/npm/what-is-the-file-package-json/
+  * npm init - uue package.json faili loomine (npm init -y loob package.json faili ilma küsimusi esitamata)
+  * npm install - npm paki paigaldamine (--save-dev võtme lisamine lisab paki arenduse sõltuvusena - seda pakki on vaja ainult arendamiseks nt nodemon) Samuti projekti sõltuvuste paigaldamiseks (Näiteks laete githubist alla node projekti, siis ei ole sellega kaasas sõltuvusi, vaid need on kirjeldatud package.json failis ja seetõttu on vaja käivitada käsk npm install kaustas, kus asub package.json fail)
+  * node_modules - kaust, kuhu paigaldatakse kõik npm pakid ja sõltuvused (seda kausta ei ole vaja projektiga kuhugi üles laadida, see kaust tekitatakse uuesti vastavalt package.json failile)
 * Express
-* Postman
-* JSON
+  * Väga populaarne Node.js veebirakenduste raamistik https://expressjs.com/
+* Postman - API testimise platvorm https://www.postman.com/
+* JSON - JavaScript Object Notation https://www.json.org/json-en.html
+  * Lihtne ja loetav andmevahetusformaat
+  * { "key": "value" }
 * HTTP request meetodid https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
   * GET - määratud ressursi pärimine (näiteks GET /api/users tagastab kasutajate nimekirja)
   * POST - määratud ressursile üksuse edastamine (näiteks POST /api/users päringuga saadetakse kasutaja andmed uue kasutaja lisamiseks andmebaasi)
@@ -19,18 +33,16 @@
   * D - Delete (DELETE)
 
 * HTTP Respons koodid https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
-  **Edukad:**
+  * **Edukad:**
   * 200 - OK
   * 201 - Created
-  **Vead**
+  * **Vead**
   * 400 - Bad request
   * 401 - Unauthorized
   * 403 - Forbidden
   * 404 - Not Found
-  **Serveri vead**
+  * **Serveri vead**
   * 500 - Internal Server Error
-  
-
 
 ## Esimeses loengus tegime:
 
