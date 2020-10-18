@@ -1,5 +1,37 @@
 # Programmeerimine II tunnis tehtu
 
+## 
+* NodeJS
+  * 
+* NPM
+* Express
+* Postman
+* JSON
+* HTTP request meetodid https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+  * GET - määratud ressursi pärimine (näiteks GET /api/users tagastab kasutajate nimekirja)
+  * POST - määratud ressursile üksuse edastamine (näiteks POST /api/users päringuga saadetakse kasutaja andmed uue kasutaja lisamiseks andmebaasi)
+  * PUT - määratud ressursile üksuse edastamine olemasoleva üksuse muutmiseks (näiteks PUT /api/users päringuga saadetakse kaasa andmed olemasoleva kasutaja andmete muutmiseks)
+  * DELETE - kustutab määratud ressursi (näiteks DELETE /api/users/:id kustutab kasutaja määratud id-ga) (Loengus saatsime delete requestiga id kaasa päringu bodys mitte parameetrina, nagu siin näites)
+* CRUD API
+  * C - Create (POST)
+  * R - Reade (GET)
+  * U - Update (PUT)
+  * D - Delete (DELETE)
+
+* HTTP Respons koodid https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+  **Edukad:**
+  * 200 - OK
+  * 201 - Created
+  **Vead**
+  * 400 - Bad request
+  * 401 - Unauthorized
+  * 403 - Forbidden
+  * 404 - Not Found
+  **Serveri vead**
+  * 500 - Internal Server Error
+  
+
+
 ## Esimeses loengus tegime:
 
 * Alustasime lihtsa Node.js API-ga kasutades express-i
