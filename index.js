@@ -90,7 +90,7 @@ app.post('/api/users', (req, res) => {
         // Add user to 'database'
         users.push(newUser);
 
-        // Create new json for response
+        // Create new json from newUser for response
         const userToReturn = { ... newUser };
         // Remove password from user data
         delete userToReturn.password;
