@@ -87,7 +87,9 @@
 1. Jaga oma projekti Githubi linki õppejõuga.
 1. Ole valmis järgmises loengus oma tehtut tutvustama
 
-#### Mõned märkused loengust:
+## Esimese loengu lõpetuseks:
+
+#### Tähelepanekud:
 * Postmanist body saatmisel (POST, PUT, DELETE päringute tegemisel) märgi 'raw' ja siis 'JSON'
 * Postmanist JSON-i saatmisel peavad olema nii key-d, kui valued olema topeltjutumärkide vahel: { "fistName": "Juku" }
 * Praegu kasutame andmebaasi asemel lihtsalt massiive, et alguses oleks lihtsam - ei ole ideaalne lahendus, kuid testimiseks kõlbab.
