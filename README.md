@@ -34,6 +34,7 @@
   * DELETE - kustutab määratud ressursi (näiteks DELETE /api/users/:id kustutab kasutaja määratud id-ga) (Loengus saatsime delete requestiga id kaasa päringu bodys mitte parameetrina, nagu siin näites)
 * CRUD API
   * C - Create (POST)
+  ![Create](docs/images/CREATE.jpg)
   * R - Reade (GET)
   * U - Update (PUT)
   * D - Delete (DELETE)
