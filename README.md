@@ -33,8 +33,13 @@
   * PUT - määratud ressursile üksuse edastamine olemasoleva üksuse muutmiseks (näiteks PUT /api/users päringuga saadetakse kaasa andmed olemasoleva kasutaja andmete muutmiseks)
   * DELETE - kustutab määratud ressursi (näiteks DELETE /api/users/:id kustutab kasutaja määratud id-ga) (Loengus saatsime delete requestiga id kaasa päringu bodys mitte parameetrina, nagu siin näites)
 * CRUD API
+
+Name | Http method | Image
+-----|--------|------
+C - Create | POST | ![Create](docs/images/CREATE.jpg)
+
   * C - Create (POST)
-  ![Create](docs/images/CREATE.jpg)
+  
   * R - Reade (GET)
   * U - Update (PUT)
   * D - Delete (DELETE)
