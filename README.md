@@ -1,9 +1,15 @@
 # Programmeerimine II loengutes tehtu
 
 ##  Alustuseks
+* API - Application Programming Interface
+  * Liides, mille kaudu süsteemid saavad omavahel infot jagada
+  * Backend - frontend
+  * Backend - backend
+  * Andmed, mida vahetatakse o sageli JSON kujul
 * NodeJS https://nodejs.org/en/
   * Serveris töötav javascript
   * Tasuta
+  * Lihtne alustada
   * Asünkroonne ja sündmustepõhine
   * Ühelõimeline, kuid hästi skaleeruv
   * https://www.tutorialspoint.com/nodejs/nodejs_introduction.htm
