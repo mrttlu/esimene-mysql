@@ -37,12 +37,9 @@
 Name | Http method | Image
 -----|--------|------
 C - Create | POST | ![Create](docs/images/CREATE.jpg)
-
-  * C - Create (POST)
-  
-  * R - Reade (GET)
-  * U - Update (PUT)
-  * D - Delete (DELETE)
+R - Read | GET | ![Create](docs/images/READ.jpg)
+U - Update | PUT | ![Create](docs/images/UPDATE.jpg)
+D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 
 * HTTP Respons koodid https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
   * **Edukad:**
