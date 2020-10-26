@@ -78,6 +78,16 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * Node projektide puhul ei ole vaja üles laadida node_modules kausta, kuna see on tihti üsna suuremahuline ja seda on lihtne uuesti taasluua (npm install)
   * Githubi poolt loodud node .gitignore faili näidis: https://github.com/mrttlu/esimene/blob/main/.gitignore
 
+## Esimese loengu teemad (16. oktoober)
+* Sissejuhatus ainesse
+* Github
+* Nodejs
+* Npm
+* Express
+* Postman
+* Json
+* Projekti tutvustus ja alustamine.
+
 ## Esimeses loengus tegime:
 * Alustasime lihtsa Node.js API-ga kasutades express-i
 * Tegime /api/ping endpoindi, mille abil saame kontrollida, kas API töötab ja mis annab vastuseks 200 - OK response ja JSON-i infoga: { success: true }
@@ -114,3 +124,29 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 * https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
 * https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 * https://www.json.org/json-en.html
+
+## Teise loengu teemad (31. oktoober)
+* Kodutööde esitlemine
+* Moodulid
+* API struktuur
+  * controller
+  * service
+  * routes
+  * helpers
+
+## Kolmanda loengu teemad (14. november)
+* Kodutööde esitlemine
+* Middleware
+* Autentimine
+* Autoriseerimine
+
+## neljanda loengu teemad (28. november)
+* Kodutööde esitlemine
+* Andmebaasiga liidestamine
+
+## Viienda loengu teemad (18. detsember)
+* Kodutööde esitlemine
+* Testimine
+* Automaattestid
+
+## Eksam (9.jaanuar) 
