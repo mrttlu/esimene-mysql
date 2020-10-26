@@ -50,7 +50,7 @@ const subjects = [
         userId: 0
     },
     {
-        id: 0,
+        id: 1,
         name: 'Programmeerimine II',
         lecturerId: 0,
         userId: 0
@@ -247,7 +247,7 @@ app.delete('/api/users', (req, res) => {
 // GET - lecturers
 // Required values: none
 // Optional values: none
-// Returns: status 200 - OK and list of users in response body
+// Returns: status 200 - OK and list of lecturers in response body
 app.get('/api/lecturers', (req, res) => {
     // Return list of users
     res.status(200).json({
@@ -272,7 +272,7 @@ app.get('/api/lecturers/:id', (req, res) => {
 // Endpoint for creating new lecturer
 // POST - lecturers
 // Required values: firstName, lastName, email
-// Optionalvalues: none
+// Optional values: none
 // Returns:
 //  Success: status 201 - Created and lecturer data in response body
 //  Fail: status 400 - Bad Request and error message in response body
@@ -281,15 +281,17 @@ app.post('/api/lecturers', (req, res) => {
     const firstName = typeof(req.body.firstName) === 'string' && req.body.firstName.trim().length > 0 ? req.body.firstName : false;
     const lastName = typeof(req.body.lastName) === 'string' && req.body.lastName.trim().length > 0 ? req.body.lastName : false;
     const email = typeof(req.body.email) === 'string' && req.body.email.trim().length > 0 ? req.body.email : false;
+    const userId = typeof(req.body.userId) === 'number' ? req.body.userId : false;
 
     // Check if required data exists
-    if (firstName && lastName && email) {
+    if (firstName && lastName && email && (userId || userId === 0)) {
         // Create new json with user data
         const newLecturer = {
             id: lecturers.length,
             firstName,
             lastName,
-            email
+            email,
+            userId
         };
         // Add lecturer to 'database'
         lecturers.push(newLecturer);
@@ -377,6 +379,134 @@ app.delete('/api/lecturers', (req, res) => {
     }
 });
 
+
+// Endpoint for getting list of available subjects
+// GET - subjects
+// Required values: none
+// Optional values: none
+// Returns: status 200 - OK and list of subjects in response body
+app.get('/api/subjects', (req, res) => {
+    // Return list of subjects
+    res.status(200).json({
+        success: true,
+        subjects
+    });
+});
+
+// Endpoint for getting subject specified by id
+// GET - subjects
+// Required: id
+// Optional: none
+// Returns: status 200 - OK and subject data in response body
+app.get('/api/subjects/:id', (req, res) => {
+    // Return subject with specified id
+    res.status(200).json({
+        success: true,
+        subjects: subjects[req.params.id]
+    });
+});
+
+// Endpoint for creating new subject
+// POST - subjects
+// Required values: name, lecturerId, userId
+// Optional values: none
+// Returns:
+//  Success: status 201 - Created and lecturer data in response body
+//  Fail: status 400 - Bad Request and error message in response body
+app.post('/api/subjects', (req, res) => {
+    // Check if provided data is expected type (typeof) and has length when whitespace is removed (.trim().length)
+    const name = typeof(req.body.name) === 'string' && req.body.name.trim().length > 0 ? req.body.name : false;
+    const lecturerId = typeof(req.body.lecturerId) === 'number' ? req.body.lecturerId : false;
+    const userId = typeof(req.body.userId) === 'number' ? req.body.userId : false;
+
+    // Check if required data exists
+    if (name && (lecturerId || lecturerId === 0) && (userId || userId === 0)) {
+        // Create new json with user data
+        const newSubject = {
+            id: lecturers.length,
+            name,
+            lecturerId,
+            userId
+        };
+        // Add lecturer to 'database'
+        subjects.push(newSubject);
+
+        // Return data
+        res.status(201).json({
+            success: true,
+            subject: newSubject
+        });
+    } else {
+        // Return error message
+        res.status(400).json({
+            success: false,
+            message: 'Required field(s) missing or invalid'
+        });
+    }
+});
+
+// Endpoint for updating subjects specified by id
+// PUT - subjects
+// Required: id
+// Optional: name, lecturerId
+// Returns:
+//  Success: status 200 - OK and subject data in response body
+//  Fail: status 400 - Bad Request and error message in response body
+app.put('/api/subjects', (req, res) => {
+    // Next lines checking if provided data is expected type (typeof) and has length when whitespace is removed (.trim().length)
+    const id = typeof(req.body.id) === 'number' ? req.body.id : false;
+    const name = typeof(req.body.name) === 'string' && req.body.name.trim().length > 0 ? req.body.name : false;
+    const lecturerId = typeof(req.body.lecturerId) === 'number' ? req.body.lecturerId : false;
+    // Check if required data exists
+    if(id || id === 0) {
+        // Check if optional data exists
+        if (name) {
+            // Change user data in 'database'
+            subjects[id].name = name;
+        }
+        // Check if optional data exists
+        if ((lecturerId || lecturerId === 0)) {
+            // Change user data in 'database'
+            subjects[id].lecturerId = lecturerId;
+        }
+        // Return updated user data
+        res.status(200).json({
+            success: true,
+            subjects: subjects[id]
+        });
+    } else {
+        // Return error message
+        res.status(400).json({
+            success: false,
+            message: 'Required field(s) missing or invalid'
+        });
+    }
+});
+
+// Endpoint for deleting subject specified by id
+// DELETE - subjects
+// Required: id
+// Optional: none
+// Returns:
+//  Success: status 200 - OK and { success: true } message
+//  Fail: status 400 - Bad Request and error message in response body
+app.delete('/api/subjects', (req, res) => {
+    // Check if required data exists
+    const id = typeof(req.body.id) === 'number' ? req.body.id : false;
+    if(id || id === 0) {
+        subjects.splice(id, 1);
+        // Return success message
+        res.status(200).json({
+            success: true
+        });
+    } else {
+        // Return error message
+        res.status(400).json({
+            success: false,
+            message: 'Required field(s) missing or invalid'
+        });
+    }
+});
 
 
 app.listen(3000, () => {
