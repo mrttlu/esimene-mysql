@@ -25,6 +25,56 @@ const users = [
     }
 ];
 
+const lecturers = [
+    {
+        id: 0,
+        firstName: 'Kalle',
+        lastName: 'Kuld',
+        email: 'kalle.kuld@tlu.ee',
+        userId: 0
+    },
+    {
+        id: 1,
+        firstName: 'Malle',
+        lastName: 'Muld',
+        email: 'malle.muld@tlu.ee',
+        userId: 0
+    },
+];
+
+const subjects = [
+    {
+        id: 0,
+        name: 'Riistvara ja operatsioonisüsteemide alused',
+        lecturerId: 0,
+        userId: 0
+    },
+    {
+        id: 0,
+        name: 'Programmeerimine II',
+        lecturerId: 0,
+        userId: 0
+    }
+];
+
+const homeworks = [
+    {
+        id: 0,
+        description: 'Esimene kodutöö',
+        dueDate: Date.now(),
+        subjectId: 0,
+        userId: 0
+    },
+    {
+        id: 1,
+        description: 'Teine kodutöö',
+        dueDate: Date.now(),
+        subjectId: 0,
+        userId: 0
+    }
+];
+
+
 // Endpoint for checking if API is alive (response 200 OK means, it is working)
 // GET - ping
 // Required values: none
