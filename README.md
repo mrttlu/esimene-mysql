@@ -129,10 +129,10 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 * Kodutööde esitlemine
 * Moodulid
 * API struktuur
-  * controller
-  * service
-  * routes
-  * helpers
+  * Controller
+  * Service
+  * Routes
+  * Helpers
 
 ## Kolmanda loengu teemad (14. november)
 * Kodutööde esitlemine
