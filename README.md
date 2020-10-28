@@ -5,7 +5,7 @@
   * Liides, mille kaudu süsteemid saavad omavahel infot jagada
   * Backend - frontend
   * Backend - backend
-  * Andmed, mida vahetatakse o sageli JSON kujul
+  * Andmed, mida vahetatakse on sageli JSON kujul
 * NodeJS https://nodejs.org/en/
   * Serveris töötav javascript
   * Tasuta
@@ -128,6 +128,8 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 ## Teise loengu teemad (31. oktoober)
 * Kodutööde esitlemine
 * Moodulid
+  * module.exports = module;
+  * const module = require('module');
 * API struktuur
   * Controller
   * Service
@@ -139,14 +141,19 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 * Middleware
 * Autentimine
 * Autoriseerimine
+  * JSON Web Token
 
 ## neljanda loengu teemad (28. november)
 * Kodutööde esitlemine
 * Andmebaasiga liidestamine
+  * Google Firestore
+  * NoSQL document database
 
 ## Viienda loengu teemad (18. detsember)
 * Kodutööde esitlemine
 * Testimine
 * Automaattestid
+  * Jest
+  * Supertest
 
 ## Eksam (9.jaanuar) 
