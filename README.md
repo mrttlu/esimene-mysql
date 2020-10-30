@@ -78,6 +78,8 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * Node projektide puhul ei ole vaja üles laadida node_modules kausta, kuna see on tihti üsna suuremahuline ja seda on lihtne uuesti taasluua (npm install)
   * Githubi poolt loodud node .gitignore faili näidis: https://github.com/mrttlu/esimene/blob/main/.gitignore
 
+* Career Karma .gitignore Files: A Guide for Beginners: https://careerkarma.com/blog/gitignore/
+
 ## Esimese loengu teemad (16. oktoober)
 * Sissejuhatus ainesse
 * Github
@@ -127,9 +129,20 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 
 ## Teise loengu teemad (31. oktoober)
 * Kodutööde esitlemine
+  * Mida mina kodutööna tegin?
+  * Minu idee on teha kodutööde üle arvestuse pidamise API, mis sisaldab järgmisi endpointe:
+  1. users - kasutajad (id, firstName, lastName, email, password)
+  1. lecturers - õppejõud/õpetajad (id, firstName, lastName, email, userId)
+  1. subjects - õppeaine (id, name, lecturerId, userId)
+  1. homeworks - kodused tööd (id, description, dueDate, subjectId, userId)
+  * Igale endpoindile saab saata päringuid nii ressursi kuvamiseks, loomiseks, muutmiseks, kui ka kustutamiseks.
+  * Iga ressurss sisaldab userId-d, sest kui API-l on erinevad kasutajad, siis userId kaudu saab omavahel siduda ressursi ja kasutaja (igal kasutajal oma ressursid).
+
 * Moodulid
-  * module.exports = module;
-  * const module = require('module');
+  * module.exports = myModule;
+  * const myModule = require('myModule');
+  * samast kataloogist const myModule = require('./myModule');
+  * kataloogist, mis on samm ülevalpool const myModule = require('../myModule');
 * API struktuur
   * Controller
   * Service
@@ -138,16 +151,18 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 
 ## Kolmanda loengu teemad (14. november)
 * Kodutööde esitlemine
-* Middleware
-* Autentimine
-* Autoriseerimine
-  * JSON Web Token
+* Middleware https://expressjs.com/en/guide/writing-middleware.html
+  * Milleks middleware'i kasutada?
+* Autentimine ja autoriseerimine
+  * JSON Web Token https://jwt.io/
+  * Bcrypt https://www.npmjs.com/package/bcrypt
+
 
 ## neljanda loengu teemad (28. november)
 * Kodutööde esitlemine
 * Andmebaasiga liidestamine
-  * Google Firestore
-  * NoSQL document database
+  * Google Firestore https://firebase.google.com/docs/firestore/quickstart
+  * NoSQL document database https://www.mongodb.com/nosql-explained
 
 ## Viienda loengu teemad (18. detsember)
 * Kodutööde esitlemine
