@@ -1,6 +1,6 @@
 # Programmeerimine II loengutes tehtu
 
-##  Alustuseks
+#  Alustuseks
 * API - Application Programming Interface
   * Liides, mille kaudu süsteemid saavad omavahel infot jagada
   * Backend - frontend
@@ -80,7 +80,7 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 
 * Career Karma .gitignore Files: A Guide for Beginners: https://careerkarma.com/blog/gitignore/
 
-## Esimese loengu teemad (16. oktoober)
+# Esimese loengu teemad (16. oktoober)
 * Sissejuhatus ainesse
 * Github
 * Nodejs
@@ -127,7 +127,7 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 * https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 * https://www.json.org/json-en.html
 
-## Teise loengu teemad (31. oktoober)
+# Teise loengu teemad (31. oktoober)
 * Kodutööde esitlemine
   * Mida mina kodutööna tegin?
   * Minu idee on teha kodutööde üle arvestuse pidamise API, mis sisaldab järgmisi endpointe:
@@ -149,7 +149,7 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * Routes
   * Helpers
 
-## Kolmanda loengu teemad (14. november)
+# Kolmanda loengu teemad (14. november)
 * Kodutööde esitlemine
 * Middleware https://expressjs.com/en/guide/writing-middleware.html
   * Milleks middleware'i kasutada?
@@ -158,17 +158,17 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * Bcrypt https://www.npmjs.com/package/bcrypt
 
 
-## neljanda loengu teemad (28. november)
+# neljanda loengu teemad (28. november)
 * Kodutööde esitlemine
 * Andmebaasiga liidestamine
   * Google Firestore https://firebase.google.com/docs/firestore/quickstart
   * NoSQL document database https://www.mongodb.com/nosql-explained
 
-## Viienda loengu teemad (18. detsember)
+# Viienda loengu teemad (18. detsember)
 * Kodutööde esitlemine
 * Testimine
 * Automaattestid
   * Jest
   * Supertest
 
-## Eksam (9.jaanuar) 
+# Eksam (9.jaanuar) 
