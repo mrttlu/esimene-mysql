@@ -158,7 +158,7 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * Bcrypt https://www.npmjs.com/package/bcrypt
 
 
-# neljanda loengu teemad (28. november)
+# Neljanda loengu teemad (28. november)
 * Kodutööde esitlemine
 * Andmebaasiga liidestamine
   * Google Firestore https://firebase.google.com/docs/firestore/quickstart
