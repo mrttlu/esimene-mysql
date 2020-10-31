@@ -3,27 +3,14 @@ const express = require('express');
 // Create express object and put it into app constant
 const app = express();
 
+const usersController = require('./api/controllers/usersController');
+
 // Middleware required for receiving body from request object as JSON
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 // Database mockup
-const users = [
-    {
-        id: 0,
-        firstName: 'Juku',
-        lastName: 'Juurikas',
-        email: 'juku@juurikas.ee',
-        password: 'juku'
-    },
-    {
-        id: 1,
-        firstName: 'Juhan',
-        lastName: 'Juurikas',
-        email: 'juhan@juurikas.ee',
-        password: 'juhan'
-    }
-];
+
 
 const lecturers = [
     {
@@ -91,13 +78,7 @@ app.get('/api/ping', (req, res) => {
 // Required values: none
 // Optional values: none
 // Returns: status 200 - OK and list of users in response body
-app.get('/api/users', (req, res) => {
-    // Return list of users
-    res.status(200).json({
-        success: true,
-        users: users
-    });
-});
+app.get('/api/users', usersController.read);
 
 
 // Endpoint for getting user specified by id
