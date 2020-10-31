@@ -67,4 +67,10 @@ usersService.update = (user) => {
     delete updatedUser.password;
     return updatedUser;
 }
+
+usersService.delete = (id) => {
+  users.splice(id, 1);
+  return true;
+}
+
 module.exports = usersService;

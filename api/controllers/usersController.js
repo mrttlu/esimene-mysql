@@ -129,10 +129,10 @@ usersController.delete = (req, res) => {
     // Check if required data exists
     const id = typeof(req.body.id) === 'number' ? req.body.id : false;
     if(id || id === 0) {
-        users.splice(id, 1);
+        const result = usersService.delete(id);
         // Return success message
         res.status(200).json({
-            success: true
+            success: result
         });
     } else {
         // Return error message
