@@ -149,6 +149,26 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * Routes
   * Helpers
 
+## Teises loengus tegime
+* Tegime controllerite ja teenuste jaoks eraldi kaustad
+  * /api/controllers
+  * /api/services
+* Liigutasime index.js alt kõik mis puudutas kasutajaid /api/controllers/usersController.js faili
+* Liigutasime usersController.js alt kõik mis puudutas kasutajate tegevusi 'andmebaasiga' /api/services/usersService.js faili
+
+## Kodutöö
+* Teha iga ressursi jaoks oma controller ja service
+* Kõik ressurssidega seotud tegevused jagada controllerite ja service-te alla nii, nagu loengus tegime kasutajatega
+
+#### Tähelepanekud
+* Tuleb andmemudel korralikult läbi mõelda - mis on millega seotud
+* Endpointide juures peaks hoidma ühtset stiili - kui on endpoint /api/users siis peaks siit saama kätte konkreetselt kasutajat puudutavat informatsiooni. Kui on vaja näiteks saada kätte ühe kasutajaga seotud muud andmed - näiteks kõik kodutööd, mis sellel kasutajal on, siis saab teha sellise endpoindi: /api/users/:id/homeworks , kus id on kasutaja id. Siis ei teki segadust, mida see id kusagil parasjagu tähendab.
+* Giti kasutamise mured
+  * Kuidas oma olemasolev projekt git-i üles laadida - https://docs.github.com/en/free-pro-team@latest/github/importing-your-projects-to-github/adding-an-existing-project-to-github-using-the-command-line
+  * Git cheat sheet - https://education.github.com/git-cheat-sheet-education.pdf
+  * Traversy Media 33 minutit pikk video sellest, mis on git ja kuidas sellega alustada jms. - https://www.youtube.com/watch?v=SWYqp7iY_Tc
+  
+
 # Kolmanda loengu teemad (14. november)
 * Kodutööde esitlemine
 * Middleware https://expressjs.com/en/guide/writing-middleware.html
