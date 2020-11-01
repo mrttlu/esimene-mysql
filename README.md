@@ -149,6 +149,9 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * Routes
   * Helpers
 
+## Milleks üldse koodi struktureerida?
+* Praeguseks oli API-l kokku 4 endpointi, milles sai teha päringuid andmete lugemiseks, kirjutamiseks, muutmiseks ja kustutamiseks. Programmikoodi oli kokku 640 rida, kusjuures loogikat ja kontrolle oli tehtud väga minimaalselt. Mis siis, kui endpointe oleks rohkem? näiteks 20 või 40 vi 100? Kokkuvõttes läheks kood väga raskelt loetavaks. Struktureerimisega saame jagada koodi vastavalt selle eesmärgile väiksemateks tükkideks, mis annab koodile parema loetavuse, taaskasutatavuse ja ka testimise.
+
 ## Teises loengus tegime
 * Tegime controllerite ja teenuste jaoks eraldi kaustad
   * /api/controllers
@@ -167,7 +170,7 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * Kuidas oma olemasolev projekt git-i üles laadida - https://docs.github.com/en/free-pro-team@latest/github/importing-your-projects-to-github/adding-an-existing-project-to-github-using-the-command-line
   * Git cheat sheet - https://education.github.com/git-cheat-sheet-education.pdf
   * Traversy Media 33 minutit pikk video sellest, mis on git ja kuidas sellega alustada jms. - https://www.youtube.com/watch?v=SWYqp7iY_Tc
-  
+
 
 # Kolmanda loengu teemad (14. november)
 * Kodutööde esitlemine
