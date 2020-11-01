@@ -22,12 +22,20 @@ usersController.read = (req, res) => {
 // Returns: status 200 - OK and user data in response body
 usersController.readById = (req, res) => {
     const userId = req.params.id;
-    const user = usersService.readById(userId);
-    // Return user with specified id
-    res.status(200).json({
-        success: true,
-        user: user
-    });
+    if (userId) {
+        const user = usersService.readById(userId);
+        // Return user with specified id
+        res.status(200).json({
+            success: true,
+            user: user
+        });
+    } else {
+        res.status(400).json({
+            success: false,
+            message: 'No id provided'
+        });
+    }
+    
 }
 
 // Endpoint for creating new user
