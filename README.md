@@ -155,7 +155,14 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 * Praeguseks oli API-l kokku 4 endpointi, milles sai teha päringuid andmete lugemiseks, kirjutamiseks, muutmiseks ja kustutamiseks. Programmikoodi oli kokku 640 rida, kusjuures loogikat ja kontrolle oli tehtud väga minimaalselt. Mis siis, kui endpointe oleks rohkem? näiteks 20 või 40 vi 100? Kokkuvõttes läheks kood väga raskelt loetavaks. Struktureerimisega saame jagada koodi vastavalt selle eesmärgile väiksemateks tükkideks, mis annab koodile parema loetavuse, taaskasutatavuse ja ka testimise.
 * Algselt näeb sellest API-st päringu tegemine välja selliselt:
 ![API sphagetti](https://github.com/mrttlu/esimene/blob/main/docs/images/Algne%20api.jpeg)
-
+* Struktureerimise eesmärk on jagada kood tükkideks vastavalt ülesannetele.
+  * Kui API-le tuleb päring, siis saadetakse päring kontrollerisse, mis teeb:
+    * Esmase kontrolli (kas vajalikud andmed on olemas)
+    * Vaatab, mida on vaja vastuse tegemiseks
+    * Küsib vastavatelt teenustelt vajalikud andmed
+    * Moodustab vastuse kliendile
+    * Saadab vastuse kliendile tagasi
+    * Vajadusel kirjutab logisse, jms.
 
 ## Teises loengus tegime
 * Tegime controllerite ja teenuste jaoks eraldi kaustad
@@ -200,4 +207,8 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * Jest
   * Supertest
 
-# Eksam (9.jaanuar) 
+# Eksam (9.jaanuar)
+* Oma projekti esitlemine
+* Küsimused / vastused
+* Individuaalne tagasiside
+
