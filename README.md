@@ -154,7 +154,7 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 ## Milleks üldse koodi struktureerida?
 * Praeguseks oli API-l kokku 4 endpointi, milles sai teha päringuid andmete lugemiseks, kirjutamiseks, muutmiseks ja kustutamiseks. Programmikoodi oli kokku 640 rida, kusjuures loogikat ja kontrolle oli tehtud väga minimaalselt. Mis siis, kui endpointe oleks rohkem? näiteks 20 või 40 vi 100? Kokkuvõttes läheks kood väga raskelt loetavaks. Struktureerimisega saame jagada koodi vastavalt selle eesmärgile väiksemateks tükkideks, mis annab koodile parema loetavuse, taaskasutatavuse ja ka testimise.
 * Algselt näeb sellest API-st päringu tegemine välja selliselt:
-![API sphagetti](https://github.com/mrttlu/esimene/blob/main/docs/images/Algne%20api.jpeg)
+![API sphagetti](docs/images/spaghetti.jpeg)
 * Struktureerimise eesmärk on jagada kood tükkideks vastavalt ülesannetele.
   * Kui API-le tuleb päring, siis:
   * Router saadab päringu vastavale kontrollerile
@@ -167,6 +167,8 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
     * Vajadusel kirjutab logisse, jms.
   * Teenused teevad päringuid andmebaasidesse ja saadavad vastuse kontrollerile
   * Lisaks võivad olla veel erinevad abiprogrammid, middlewared jms, mida meie koodis hetkel veel ei ole
+* Teises loengus tehtud struktuuri tagajärjel näeb kasutaja pärimine välja selline:
+![API Controller and service](docs/images/ControllerAndService.jpeg)
 
 ## Teises loengus tegime
 * Tegime controllerite ja teenuste jaoks eraldi kaustad
