@@ -167,7 +167,7 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
     * Vajadusel kirjutab logisse, jms.
   * Teenused teevad päringuid andmebaasidesse ja saadavad vastuse kontrollerile
   * Lisaks võivad olla veel erinevad abiprogrammid, middlewared jms, mida meie koodis hetkel veel ei ole
-* Teises loengus tehtud struktuuri tagajärjel näeb kasutaja pärimine välja selline:
+* Teises loengus tehtud struktuuri tagajärjel näeb kasutaja pärimine välja selline (hetkel meil küll puuduv teenuses kontroll selle kohta, kas selline kasutaja eksisteerib):
 ![API Controller and service](docs/images/ControllerAndService.jpeg)
 
 ## Teises loengus tegime
