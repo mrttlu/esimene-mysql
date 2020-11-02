@@ -156,13 +156,17 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 * Algselt näeb sellest API-st päringu tegemine välja selliselt:
 ![API sphagetti](https://github.com/mrttlu/esimene/blob/main/docs/images/Algne%20api.jpeg)
 * Struktureerimise eesmärk on jagada kood tükkideks vastavalt ülesannetele.
-  * Kui API-le tuleb päring, siis saadetakse päring kontrollerisse, mis teeb:
+  * Kui API-le tuleb päring, siis:
+  * Router saadab päringu vastavale kontrollerile
+  * Kontroller teeb:
     * Esmase kontrolli (kas vajalikud andmed on olemas)
     * Vaatab, mida on vaja vastuse tegemiseks
     * Küsib vastavatelt teenustelt vajalikud andmed
     * Moodustab vastuse kliendile
     * Saadab vastuse kliendile tagasi
     * Vajadusel kirjutab logisse, jms.
+  * Teenused teevad päringuid andmebaasidesse ja saadavad vastuse kontrollerile
+  * Lisaks võivad olla veel erinevad abiprogrammid, middlewared jms, mida meie koodis hetkel veel ei ole
 
 ## Teises loengus tegime
 * Tegime controllerite ja teenuste jaoks eraldi kaustad
