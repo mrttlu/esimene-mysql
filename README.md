@@ -99,6 +99,7 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * POST /api/users - saab luua uue kasutaja - vajalikud väljad: firstName, lastName, email, password. Tagastab loodud kasutaja.
   * PUT /api/users - muudab kasutaja andmed - vajalikud väljad: id ja üks muudetavatest väljadest (firstName, lastName, email või password). Tagastab muudetud kasutaja andmed
   * DELETE /api/users - kustutab kasutaja - vajalik väli: id. Tagastab vastuseks 200 - OK response ja JSON-i infoga: { success: true }
+  * Esimese loengu kood: https://github.com/mrttlu/esimene/tree/dc73fd29aa3c5a5d8c4d5dc1f78bc60cbeb78810
   
 ## Esimene kodutöö - tähtaeg enne järgmist loengut (31.10.2020)
 1. Mõelda välja projekt, millel oleks vaja vähemalt 3 - 4 endpointi. Näiteks koduste tööde üle arvestamise API, mille endpoindid oleks õppejõud, õppeaine, kodune töö vms. Eriti hea ja soovitav oleks variant, kus saate seda projekti siduda mõne teise aine kodutööga.
