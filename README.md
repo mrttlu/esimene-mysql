@@ -206,6 +206,13 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * Kuidas oma olemasolev projekt git-i üles laadida - https://docs.github.com/en/free-pro-team@latest/github/importing-your-projects-to-github/adding-an-existing-project-to-github-using-the-command-line
   * Git cheat sheet - https://education.github.com/git-cheat-sheet-education.pdf
   * Traversy Media 33 minutit pikk video sellest, mis on git ja kuidas sellega alustada jms. - https://www.youtube.com/watch?v=SWYqp7iY_Tc
+  * Teiste ja oma projekti saab oma arvutisse kloonida käsuga: git clone repositooriumi link (näiteks git clone https://github.com/mrttlu/esimene.git)
+  * Giti repositooriumi lingi saab rohelise Code nupu alt:
+  ![Giti repositooriumi link](docs/images/gitAadress.png)
+  * Peale kloonimist pead kindlasti minema kloonitud repositooriumi kausta (näiteks cd esimene)
+  * Kui oled repo alla klooninud, siis enne kui selle käivitada saad, tuleb sõltuvused alla laadida käsuga npm install (seda tuleb teha selles kaustas, kus on fail package.json)
+* Node programmi saab käivitada käsuga node failinimi.js (meil siiani node index.js)
+* Kui ei taha peale igat muudatust programmi seisma ja uuesti käima panna, võib kasutada sellist programmi, nagu nodemon (https://nodemon.io/), mis saab ise aru, kui failides tehakse muudatusi ja peale salvestamist paneb ise automaatselt programmi korra kinni ja kohe uuesti käima. Selleks tuleb see kõigepealt paigaldada (npm install -g nodemon (linuxi ja maci all tahab võibolla ka sudo käsku ette - sudo npm install -g nodemon)) ja peale seda käivitada node programm käsuga nodemon failinimi.js (nodemon index.js).
 
 
 # Kolmanda loengu teemad (14. november)
