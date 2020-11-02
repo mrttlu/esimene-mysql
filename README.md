@@ -137,6 +137,7 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   1. homeworks - kodused tööd (id, description, dueDate, subjectId, userId)
   * Igale endpoindile saab saata päringuid nii ressursi kuvamiseks, loomiseks, muutmiseks, kui ka kustutamiseks.
   * Iga ressurss sisaldab userId-d, sest kui API-l on erinevad kasutajad, siis userId kaudu saab omavahel siduda ressursi ja kasutaja (igal kasutajal oma ressursid).
+  * Minu kodutöö: https://github.com/mrttlu/esimene/tree/20ab360f2e42f77c3a1c3d9804953ebbecd87e94
 
 * Moodulid
   * module.exports = myModule;
