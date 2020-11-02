@@ -141,10 +141,27 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * Minu kodutöö: https://github.com/mrttlu/esimene/tree/20ab360f2e42f77c3a1c3d9804953ebbecd87e94
 
 * Moodulid
-  * module.exports = myModule;
-  * const myModule = require('myModule');
-  * samast kataloogist const myModule = require('./myModule');
-  * kataloogist, mis on samm ülevalpool const myModule = require('../myModule');
+  * Moodulite abil on võimalik jagada kood eraldi failidesse ja vajaduse korral neid importida.
+  * Mooduli tegemiseks tuleb selle sisu eksportida, näiteks:
+  ```javascript
+  // defineerime konfiguratsiooni objekti
+  const config = {
+    port: 3000,
+    databasePassword: 'secret'
+  };
+  // Ekspordime selle objekti - ilma selleta selle faili sisu mujale importida ei saa!
+  module.exports = config;
+  ```
+  * Teises failis saab seda faili nüüd kasutada nii:
+  ```javascript
+  // Impordime config faili sisu ja paneme selle myConfig konstanti
+  const myConfig = require('./config'); // .js laiendit ei ole vaja kirjutada, Node saab sellest ise aru
+
+  // Näitame konsoolis config moodulist imporditud pordi numbrit
+  console.log(myConfig.port);
+  ```
+  * samast kataloogist importides pannakse faili nime ette './', näiteks: const myConfig = require('./config');
+  * kataloogist, mis on samm ülevalpool pannakse nime ette '../', näiteks const myConfig = require('../config');
 * API struktuur
   * Controller
   * Service
