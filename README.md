@@ -163,6 +163,7 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * /api/services
 * Liigutasime index.js alt kõik mis puudutas kasutajaid /api/controllers/usersController.js faili
 * Liigutasime usersController.js alt kõik mis puudutas kasutajate tegevusi 'andmebaasiga' /api/services/usersService.js faili
+* Kood peale teist loengut: https://github.com/mrttlu/esimene/tree/c22fec22b5c1da5e676226e0c6b4909c796964b1
 
 ## Kodutöö
 * Teha iga ressursi jaoks oma controller ja service
