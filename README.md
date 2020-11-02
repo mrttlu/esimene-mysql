@@ -160,8 +160,8 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   // Näitame konsoolis config moodulist imporditud pordi numbrit
   console.log(myConfig.port);
   ```
-  * samast kataloogist importides pannakse faili nime ette './', näiteks: const myConfig = require('./config');
-  * kataloogist, mis on samm ülevalpool pannakse nime ette '../', näiteks const myConfig = require('../config');
+  * Samast kataloogist importides pannakse faili nime ette './', näiteks: const myConfig = require('./config');
+  * Kataloogist, mis on samm ülevalpool pannakse nime ette '../', näiteks const myConfig = require('../config');
 * API struktuur
   * Controller
   * Service
@@ -169,7 +169,7 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * Helpers
 
 ## Milleks üldse koodi struktureerida?
-* Praeguseks oli API-l kokku 4 endpointi, milles sai teha päringuid andmete lugemiseks, kirjutamiseks, muutmiseks ja kustutamiseks. Programmikoodi oli kokku 640 rida, kusjuures loogikat ja kontrolle oli tehtud väga minimaalselt. Mis siis, kui endpointe oleks rohkem? näiteks 20 või 40 vi 100? Kokkuvõttes läheks kood väga raskelt loetavaks. Struktureerimisega saame jagada koodi vastavalt selle eesmärgile väiksemateks tükkideks, mis annab koodile parema loetavuse, taaskasutatavuse ja ka testimise.
+* Praeguseks on API-l kokku 4 endpointi, milles saab teha päringuid andmete lugemiseks, kirjutamiseks, muutmiseks ja kustutamiseks. Programmikoodi on kokku 640 rida, kusjuures loogikat ja kontrolle on tehtud väga minimaalselt. Mis siis, kui endpointe oleks rohkem? näiteks 20 või 40 vi 100? Kokkuvõttes läheks kood väga raskelt loetavaks. Struktureerimisega saame jagada koodi vastavalt selle eesmärgile väiksemateks tükkideks, mis annab koodile parema loetavuse, taaskasutatavuse ja ka testimise.
 * Algselt näeb sellest API-st päringu tegemine välja selliselt:
 ![API sphagetti](docs/images/spaghetti.jpeg)
 * Struktureerimise eesmärk on jagada kood tükkideks vastavalt ülesannetele.
