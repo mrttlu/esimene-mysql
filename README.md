@@ -217,10 +217,12 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 
 # Kolmanda loengu teemad (14. november)
 * Kodutööde esitlemine
-* Middleware https://expressjs.com/en/guide/writing-middleware.html
+* Middleware:
+  * Kirjutamine: https://expressjs.com/en/guide/writing-middleware.html
+  * Kasutamine: https://expressjs.com/en/guide/using-middleware.html
   * Milleks middleware'i kasutada?
 * Autentimine ja autoriseerimine
-  * JSON Web Token https://jwt.io/
+  * JSON Web Token https://www.npmjs.com/package/jsonwebtoken
   * Bcrypt https://www.npmjs.com/package/bcrypt
 
 
