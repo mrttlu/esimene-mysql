@@ -91,7 +91,7 @@ D - Delete | DELETE | ![Delete](docs/images/DELETE.jpg)
 * Projekti tutvustus ja alustamine.
 
 ## Esimese loengu slaidid
-![Create](docs/1.loeng.pdf)
+https://github.com/mrttlu/esimene/blob/main/docs/1.%20loeng.pdf
 
 ## Esimeses loengus tegime:
 * Alustasime lihtsa Node.js API-ga kasutades express-i
@@ -142,6 +142,9 @@ D - Delete | DELETE | ![Delete](docs/images/DELETE.jpg)
   * Igale endpoindile saab saata päringuid nii ressursi kuvamiseks, loomiseks, muutmiseks, kui ka kustutamiseks.
   * Iga ressurss sisaldab userId-d, sest kui API-l on erinevad kasutajad, siis userId kaudu saab omavahel siduda ressursi ja kasutaja (igal kasutajal oma ressursid).
   * Minu kodutöö: https://github.com/mrttlu/esimene/tree/20ab360f2e42f77c3a1c3d9804953ebbecd87e94
+
+## Teise loengu slaidid
+https://github.com/mrttlu/esimene/blob/main/docs/2.%20loeng.pdf
 
 * Moodulid
   * Moodulite abil on võimalik jagada kood eraldi failidesse ja vajaduse korral neid importida.
