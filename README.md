@@ -37,9 +37,9 @@
 Name | Http method | Image
 -----|--------|------
 C - Create | POST | ![Create](docs/images/CREATE.jpg)
-R - Read | GET | ![Create](docs/images/READ.jpg)
-U - Update | PUT | ![Create](docs/images/UPDATE.jpg)
-D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
+R - Read | GET | ![Read](docs/images/READ.jpg)
+U - Update | PUT | ![Put](docs/images/UPDATE.jpg)
+D - Delete | DELETE | ![Delete](docs/images/DELETE.jpg)
 
 * HTTP Respons koodid https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
   * **Edukad:**
@@ -89,6 +89,9 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
 * Postman
 * Json
 * Projekti tutvustus ja alustamine.
+
+## Esimese loengu slaidid
+![Create](docs/1.loeng.pdf)
 
 ## Esimeses loengus tegime:
 * Alustasime lihtsa Node.js API-ga kasutades express-i
@@ -221,6 +224,7 @@ D - Delete | DELETE | ![Create](docs/images/DELETE.jpg)
   * Kirjutamine: https://expressjs.com/en/guide/writing-middleware.html
   * Kasutamine: https://expressjs.com/en/guide/using-middleware.html
   * Milleks middleware'i kasutada?
+  * Järjekord on oluline
 * Autentimine ja autoriseerimine
   * JSON Web Token https://www.npmjs.com/package/jsonwebtoken
   * Bcrypt https://www.npmjs.com/package/bcrypt
