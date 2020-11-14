@@ -319,6 +319,34 @@ usersController.create = async (req, res) => {
   const newUser = await usersService.create(user);
 }
 ```
+* Middleware
+  * Mis on middleware?
+  Middleware funktsioonid on funktsioonid, millel on juurdepääs päringuobjektile (req), vastuseobjektile (res) ja järgmisele funktsioonile rakenduse päringu-vastuse tsüklis. Next funktsioon on Express-ruuteri funktsioon, mis käivitamisel käivitab middleware praeguse middleware’i järel.
+  * Middleware saab:
+    * Käivitada koodi
+    * Teha muudatusi request ja response objektides
+    * Lõpetada request-response tsüklit
+    * Kutsuda välja järjekorrast järgmine middleware
+  * Meeles peab pidama, et kui middleware ei lõpeta päringu-vastuse tsüklit (näiteks res.status(200).json…), siis peab middleware kutsuma välja next() funktsiooni, muidu jääb rakendus ‘rippuma’
+
+  Logimise middleware näide:
+  ```javascript
+  // Funktsioon päringute logimiseks konsooli
+  const logger = (req, res, next) => {
+    // Väljastatakse konsooli päringu tegemise kuupäev ja päringu aadress (endpoint, millele päring tehti)
+    console.log(new Date(), req.url);
+    // Next funktsiooni käivitamine annab järjekorra üle järgmisele middleware'le
+    next();
+  }
+  ```
+  Selleks, et middleware't kasutada saaks, peab selle registreerima, seejuures on oluline see, et seda tuleb teha enne route'de defineerimist.
+  ```javascript
+  app.use(logger);
+
+  app.get('/api/users', usersService.read);
+  ```
+  Skeemi peal näeb middleware kasutamine välja nii:
+  ![Middleware](docs/images/Middleware.jpg)
 
 # Neljanda loengu teemad (28. november)
 * Kodutööde esitlemine
