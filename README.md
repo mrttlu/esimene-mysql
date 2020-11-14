@@ -348,6 +348,23 @@ usersController.create = async (req, res) => {
   Skeemi peal näeb middleware kasutamine välja nii:
   ![Middleware](docs/images/Middleware.jpeg)
 
+## Mida me ei jõudnud kolmandas loengus teha
+* JSON Web Token - https://jwt.io/introduction/
+  * JSON WEB TOKEN (JWT) on avatud standard, mis määratleb kompaktse ja iseseisva viisi teabe turvaliseks edastamiseks osapoolte vahel JSON-objektina. Seda teavet saab kontrollida ja usaldada, kuna see on digitaalselt allkirjastatud. JWT-sid saab allkirjastada parooliga või avaliku / privaatse võtmepaari abil RSA või ECDSA abil.
+  * JWT struktuur
+    * Header
+      * Päis koosneb tavaliselt kahest osast: loa tüübist, milleks on JWT, ja kasutatavast allkirjastamise algoritmist, näiteks HMAC SHA256 või RSA.
+    * Payload
+      * Tokeni teine osa on kasulik koormus, mis sisaldab nõudeid.
+    * Signature
+      * Allkirjaosa loomiseks peate võtma kodeeritud päise, kodeeritud kasuliku koormuse, parooli, päises määratud algoritmi ja selle allkirjastama.
+  * Millal JWT-d kasutada?
+    * Autoriseerimine: see on kõige tavalisem stsenaarium JWT kasutamiseks. Kui kasutaja on sisse logitud, sisaldab iga järgmine taotlus JWT-d, mis võimaldab kasutajal juurde pääseda selle märgiga lubatud marsruutidele, teenustele ja ressurssidele.
+    * Teabevahetus: JSON-i veebimärgid on hea viis turvaliselt osapoolte vahel teavet edastada. Kuna JWT-sid saab allkirjastada - näiteks kasutades avaliku / privaatse võtme paare -, võite olla kindel, et saatjad on need, kes nad end ütlevad. Lisaks, kuna allkiri arvutatakse päise ja kasuliku koormuse abil, saate ka kontrollida, kas sisu ei ole muudetud
+
+
+
+
 # Neljanda loengu teemad (28. november)
 * Kodutööde esitlemine
 * Andmebaasiga liidestamine
