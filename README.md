@@ -346,7 +346,7 @@ usersController.create = async (req, res) => {
   app.get('/api/users', usersService.read);
   ```
   Skeemi peal näeb middleware kasutamine välja nii:
-  ![Middleware](docs/images/Middleware.jpg)
+  ![Middleware](docs/images/Middleware.jpeg)
 
 # Neljanda loengu teemad (28. november)
 * Kodutööde esitlemine
