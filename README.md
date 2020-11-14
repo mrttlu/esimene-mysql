@@ -223,6 +223,8 @@ https://github.com/mrttlu/esimene/blob/main/docs/2.%20loeng.pdf
 
 # Kolmanda loengu teemad (14. november)
 * Kodutööde esitlemine
+* Parooli hashimine
+  * Bcrypt https://www.npmjs.com/package/bcrypt
 * Middleware:
   * Kirjutamine: https://expressjs.com/en/guide/writing-middleware.html
   * Kasutamine: https://expressjs.com/en/guide/using-middleware.html
@@ -230,8 +232,93 @@ https://github.com/mrttlu/esimene/blob/main/docs/2.%20loeng.pdf
   * Järjekord on oluline
 * Autentimine ja autoriseerimine
   * JSON Web Token https://www.npmjs.com/package/jsonwebtoken
-  * Bcrypt https://www.npmjs.com/package/bcrypt
 
+## Kolmandas loengus tegime
+* Parooli hashimine
+Praegu on meil 'andmebaasis' kasutaja parool salvestatud lihtsalt tavalise stringina. Kui pärime kasutajate andmeid, on andmete hulgas parool kenasti näha ja loetav. See ei ole hea praktika. Paroolid peavad olema andmebaasis salvestatud sellisel kujul, et neid ei oleks võimalik sellisel kujul lugeda, et on aru saada, mis parooliga tegemist on. Selleks kasutatakse parooli hashimist.
+Nodes saame kasutada sellist npm pakki, nagu bcrypt (https://www.npmjs.com/package/bcrypt). Bcrypt on funktsioon andmete krüpteerimiseks. Sellest, mis bcrypt on ja kuidas see täpsemalt toimib, saate lugeda näiteks Dan Arias'e artiklist siin: https://auth0.com/blog/hashing-in-action-understanding-bcrypt/
+Meie API-s peaks bcrypti kasutamine käima nii, et kui me loome uue kasutaja, siis enne, kui kasutaja andmed 'andmebaasi' salvestatakse, hashitakse parool ära ja tavalise stringi asemel salvestatakse 'andmebaasi' hashitud parool.
+Selle jaoks lisame oma API-le uue teenuse 'hashService.js' ja sinna lisame kaks funktsiooni, millest üks on parooli hashimiseks ja teine on hiljem parooli võrdlemiseks hashiga.
+Lisaks paigaldame bcrypt'i käsuga npm install bcrypt
+hashService.js fail näeb välja selline:
+```javascript
+// Impordime bcrypt'i
+const bcrypt = require('bcrypt');
+// Järgnev muutuja määrab ära, kui palju peab tööd tegema parooli hashimiseks (mida suurem number, seda rohkem on vaja vaeva näha)
+const saltRounds = 10;
+// Defineerime teenuse objekti
+const hashService = {};
+
+// Funktsioon parooli hashimiseks - funktsioon tagastab hashitud parooli
+hashService.hash = (password) => {
+  const hash = bcrypt.hash(password, saltRounds);
+  return hash;
+}
+
+// Funktsioon parooli võrdlemiseks hashiga - funktsioon tagastab true või false vastavalt võrdlemise tulemusele
+hashService.compare = (password, hash) => {
+  const match = bcrypt.compare(password, hash);
+  return match;
+}
+// Ekspordime selle objekti, et saaksime seda teenust mujal kasutada
+module.exports = hashService;
+```
+Kuna parooli hashimine on tegevus, mis võtab aega, siis node eripärast lähtudes (asünkroonsus) võib juhtuda olukord, kus parooli hashimine võtab aega nii kaua, et koodi täitmine läheb enne edasi, kui parool hashitud saab. Seetõttu peame ütlema programmi koodile, et ära enne järgmise koodirea juurde liigu, kui hashimine on tehtud. Selleks saame kasutada async/await funktsionaalsust.
+```javascript
+// Kui teame, et mingi funktsiooni sees toimub aeganõudev tegevus, siis peame kasutama selle funktsiooni deklareerimise juures async märksõna
+const timeConsumingFunction = async () => {
+  // Kui tahame ära oodata vastuse, enne kui kood edasi läheb, kasutame await märksõna
+  const result = await someFunction();
+  // Vastus tagastatakse alles siis, kui result on käes
+  return result;
+}
+```
+Async/await muutub eriti oluliseks siis, kui hakkame oma API-t andmebaasiga liidestama, sest andmete pärimine võtab tihtipeale aega.
+
+Funktsioonid hashService faili sees tuleb teha selliseks:
+```javascript
+
+// Funktsioon parooli hashimiseks - funktsioon tagastab hashitud parooli
+hashService.hash = async (password) => {
+  const hash = await bcrypt.hash(password, saltRounds);
+  return hash;
+}
+
+// Funktsioon parooli võrdlemiseks hashiga - funktsioon tagastab true või false vastavalt võrdlemise tulemusele
+hashService.compare = async (password, hash) => {
+  const match = await bcrypt.compare(password, hash);
+  return match;
+}
+```
+Meeles peab seejuures pidama seda, et async/await märksõnu on vaja kasutada nüüd ka nendes funktsioonides, mis hashimise funktsioone välja kutsuma hakkavad (usersService ja usersController)
+
+Nüüd, kui meil on olemas teenud, mis oskab parooli hashida, saame seda kasutada kasutaja andmete salvestamisel.
+Andmete salvestamisega tegeleb usersService funktsioon 'create'
+```javascript
+// Hashsimise teenuse kasutamiseks peame selle kõigepealt importima
+const hashService = require('./hashService');
+
+// Kasutaja lisamise funktsioon
+usersService.create = async (user) => {
+  user.id = users.length;
+  // Hashime loodava kasutaja parooli ja asendame selle kasutaja objektis saadud hashiga
+  user.password = await hashService.hash(user.password);
+  // Lisame kasutaja 'andmebaasi'
+  users.push(user);
+
+  // Tagastame kasutaja
+  return user;
+}
+```
+Tähelepanu peab pöörama sellele, et kuna peame ootama ära hashimise teenusest tagastatava tulemuse, siis peame ka siin kasutama async/await'i
+
+Samuti peab lisama async/await ka usersControllerisse, mis eelneva teenuse välja kutsub:
+```javascript
+usersController.create = async (req, res) => {
+  // Uue kasutaja loomine
+  const newUser = await usersService.create(user);
+}
+```
 
 # Neljanda loengu teemad (28. november)
 * Kodutööde esitlemine
