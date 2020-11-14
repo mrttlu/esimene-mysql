@@ -1,3 +1,4 @@
+const hashService = require('./hashService');
 const users = [
   {
       id: 0,
@@ -30,13 +31,14 @@ usersService.readById = (userId) => {
 // Create user
 usersService.create = (user) => {
   user.id = users.length;
+  // user.password = hashService.hash(user.password);
   // Add user to 'database'
   users.push(user);
 
   // Create new json from newUser for response
   const userToReturn = { ... user };
   // Remove password from user data
-  delete userToReturn.password;
+  // delete userToReturn.password;
 
   return userToReturn;
 }
