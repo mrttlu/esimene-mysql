@@ -1,12 +1,20 @@
 const hashService = require('./hashService');
 const usersService = require('./usersService');
+const jwt = require('jsonwebtoken');
+const config = require('../../config');
 const authService = {};
 
 authService.login = async (email, password) => {
   const user = await usersService.readByEmail(email);
   if (user) {
     const match = await hashService.compare(password, user.password);
-    return match;
+    if (match) {
+      // Generate token
+      const token = jwt.sign({ email: user.email }, config.jwtSecret, { expiresIn: 60 * 60 });
+      return token;
+    } else {
+      return false;
+    }
   } else {
     return false;
   }

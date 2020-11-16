@@ -15,12 +15,14 @@ authController.login = async (req, res) => {
 
   // Check if required data exists
   if (email && password) {
-    const loggedIn = await authService.login(email, password);
-    if (loggedIn) {
+    const token = await authService.login(email, password);
+    if (token) {
+      
+
       // Return data
       res.status(200).json({
         success: true,
-        message: 'Logged in'
+        token: token
       });
     } else {
       // Return error message

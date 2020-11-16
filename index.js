@@ -16,7 +16,7 @@ const authController = require('./api/controllers/authController');
 
 // Import logger middleware
 const logger = require('./api/middlewares/logger');
-
+const isLoggedIn = require('./api/middlewares/isLoggedIn');
 
 // Middleware required for receiving body from request object as JSON
 app.use(express.json());
@@ -25,12 +25,13 @@ app.use(logger);
 
 // Routes
 app.get('/api/ping', pingController.ping);
-
 app.post('/api/login', authController.login);
+app.post('/api/users', usersController.create);
+
+app.use(isLoggedIn);
 
 app.get('/api/users', usersController.read);
 app.get('/api/users/:id', usersController.readById);
-app.post('/api/users', usersController.create);
 app.put('/api/users', usersController.update);
 app.delete('/api/users', usersController.delete);
 
