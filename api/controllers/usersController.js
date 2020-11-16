@@ -45,7 +45,7 @@ usersController.readById = (req, res) => {
 // Returns:
 //  Success: status 201 - Created and user data in response body
 //  Fail: status 400 - Bad Request and error message in response body
-usersController.create = (req, res) => {
+usersController.create = async (req, res) => {
     // Check if provided data is expected type (typeof) and has length when whitespace is removed (.trim().length)
     const firstName = typeof(req.body.firstName) === 'string' && req.body.firstName.trim().length > 0 ? req.body.firstName : false;
     const lastName = typeof(req.body.lastName) === 'string' && req.body.lastName.trim().length > 0 ? req.body.lastName : false;
@@ -62,7 +62,7 @@ usersController.create = (req, res) => {
             password
         };
 
-        const newUser = usersService.create(user);
+        const newUser = await usersService.create(user);
         // Return data
         res.status(201).json({
             success: true,

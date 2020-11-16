@@ -5,14 +5,14 @@ const users = [
       firstName: 'Juku',
       lastName: 'Juurikas',
       email: 'juku@juurikas.ee',
-      password: 'juku'
+      password: '$2b$10$0Ij/HJQO1UIejaqBMJMH/OHWgkThGm/QsEiLZbU3n.aU/q9qFVTL6' // password: johndoe
   },
   {
       id: 1,
       firstName: 'Juhan',
       lastName: 'Juurikas',
       email: 'juhan@juurikas.ee',
-      password: 'juhan'
+      password: '$2b$10$0Ij/HJQO1UIejaqBMJMH/OHWgkThGm/QsEiLZbU3n.aU/q9qFVTL6'
   }
 ];
 
@@ -29,9 +29,9 @@ usersService.readById = (userId) => {
 }
 
 // Create user
-usersService.create = (user) => {
+usersService.create = async (user) => {
   user.id = users.length;
-  // user.password = hashService.hash(user.password);
+  user.password = await hashService.hash(user.password);
   // Add user to 'database'
   users.push(user);
 
