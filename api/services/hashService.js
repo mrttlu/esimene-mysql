@@ -7,4 +7,9 @@ hashService.hash = async (password) => {
   return hash;
 }
 
+hashService.compare = async (password, hash) => {
+  const match = await bcrypt.compare(password, hash);
+  return match;
+}
+
 module.exports = hashService;

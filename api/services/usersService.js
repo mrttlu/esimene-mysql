@@ -23,6 +23,11 @@ usersService.read = () => {
   return users;
 }
 
+usersService.readByEmail = (email) => {
+  const user = users.find(user => user.email === email);
+  return user;
+}
+
 // Return user by id
 usersService.readById = (userId) => {
   return users[userId];

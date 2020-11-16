@@ -9,12 +9,15 @@ const usersController = require('./api/controllers/usersController');
 const lecturersController = require('./api/controllers/lecturersController');
 const subjectsController = require('./api/controllers/subjectsController');
 const homeworksController = require('./api/controllers/homeworksController');
+const authController = require('./api/controllers/authController');
 
 // Middleware required for receiving body from request object as JSON
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.get('/api/ping', pingController.ping);
+
+app.post('/api/login', authController.login);
 
 app.get('/api/users', usersController.read);
 app.get('/api/users/:id', usersController.readById);
