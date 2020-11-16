@@ -11,10 +11,16 @@ const subjectsController = require('./api/controllers/subjectsController');
 const homeworksController = require('./api/controllers/homeworksController');
 const authController = require('./api/controllers/authController');
 
+// Import logger middleware
+const logger = require('./api/middlewares/logger');
+
+
 // Middleware required for receiving body from request object as JSON
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(logger);
 
+// Routes
 app.get('/api/ping', pingController.ping);
 
 app.post('/api/login', authController.login);
@@ -43,6 +49,7 @@ app.post('/api/homeworks', homeworksController.create);
 app.put('/api/homeworks', homeworksController.update);
 app.delete('/api/homeworks', homeworksController.delete);
 
+// Start listening
 app.listen(3000, () => {
     console.log('Server running');
 });
