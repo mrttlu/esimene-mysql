@@ -368,72 +368,58 @@ usersController.create = async (req, res) => {
 # Neljanda loengu teemad (28. november)
 * Kodutööde esitlemine
 * Andmebaasiga liidestamine
-  * Google Firestore https://firebase.google.com/docs/firestore/quickstart
-  * NoSQL document database https://www.mongodb.com/nosql-explained
+  * MySQL
 
-## Google Cloud Firestore andmebaasiga ühendumine
-* Logi sisse Google Firestore konsooli: https://console.firebase.google.com/
-* Sisselogimiseks võiks kasutada näiteks isiklikku Google kontot, sest vähemalt mul ei õnnestunud tlu.ee kontoga uut Firestore projekti luua.
-* Lisa uus projekt vajutades 'Add project' nuppu.
-  * Lisa projektile nimi.
-  * Vali kas tahad kasutada Google Analyticsit.
-  * Vajuta nuppu 'Create Project'.
-  * Vajuta 'Continue'.
-* Lisa projektile andmebaas.
-  * Selleks tuleb valida vasakult menüüst 'Cloud Firestore' ja seejärel paremalt 'Create Database'.
-  * Vali 'Start in production mode' või 'Test mode'. Mina valisin hetkel lihtsuse mõttes Test mode - selleks, et alustamine oleks võimalikult lihtne.
-  * Vali asukoht, kus andmebaasi hoitakse.
+* Kõigepealt tuleks arvutisse installeerida MySQL-i server (https://dev.mysql.com/downloads/mysql/) või kasutada mingit olemasolevat varianti
+* Kes oskab, sellel soovitan kasutada MySQLi Dockeri konteinerit (https://hub.docker.com/_/mysql)
+* Seejärel tulks luua andmebaasi mudel, luua andmebaas ja tabelid.
+  * Mina tegin sellise andmebaasi mudeli: ![dbModel](docs/images/dbModel.png)
+  * Mudeli loomiseks on kasutatu MySQL Workbench tööriista (https://dev.mysql.com/downloads/workbench/), mille abil on väga mugav võtta otse andmebaasiga ühendust, teha tabeleid, luua nende vahel seoseid, teha päringuid jne.
+  * Andmebaasi tabelite loomise päringud on paringud.sql failis.
+* Paigalda oma API-le mysql2 npm pakk (https://www.npmjs.com/package/mysql2) - npm install mysql2
+* Nagu ka loengus, teeme andmebaasi ühenduse jaoks eraldi faili db.js - sinna impordime mysql2 teegi, loome andmebaasi ühenduse ja ekspordime selle, et seda oleks võimalik eraldi teenuste all kasutada.
 
-* Kuna Firestore projektiga saab võtta ühendust erinevatest rakendustest korraga ja võib olla vaja neid ühendusi eristada, tuleb Firestore projektile registreerida iga rakendus eraldi. Selleks võtame vasakult menüüst hammasratta ikooni alt 'Project settings'.
-* Avanenud lehe alumises osas on võimalik lisada erinevate rakenduste ühendusi. Nodega ühendumise seadistuse saamiseks on vaja vajutada '</>' nupule.
-* Pane rakendusele nimi ja vajuta nuppu 'Register app'.
-* Vajuta nuppu 'Continue to the console'.
-* Nüüd on võimalik konsoolist saada vajalikud seadistused meie API jaoks. Selleks vajuta lehe ülaosas 'Service accounts'.
-* Avanenud lehelt leiad seadistuse, mille saad kopeerida oma projekti (Soovitatavalt kuhugi eraldi faili, näiteks db.js).
+db.js fail võiks välja näha siis selline:
 ```javascript
-var admin = require("firebase-admin");
+  // Impordime config.js failist andmebaasiühenduse jaoks vajalikud muutujad
+  const { dbConfig } = require('./config')
+  // Impordime mysql2 teegi ja omistame selle mysql konstanti
+  const mysql = require('mysql2');
+  // Impordime Node util teegi selleks, et saaksime hiljem mysql andmebaasi ühendust kasutada sünkroonselt async/await-iga
+  const util = require('util');
 
-var serviceAccount = require("path/to/serviceAccountKey.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://homeworks-62d8f.firebaseio.com"
-});
+  // Loome andmebaasi ühenduse jaoks config objekti
+  const config = {
+    host: dbConfig.host,
+    user: dbConfig.user,
+    password: dbConfig.password,
+    database: dbConfig.database
+};
+// Loome ühenduse andmebaasiga
+const connection = mysql.createConnection(config);
+// Muudame query callback funktsiooni Promise-ks
+connection.query = util.promisify(connection.query);
+// Ekspordime ühenduse
+module.exports = connection;
 ```
 
-Lisame faili lõppu veel kaks rida, millega loome db objekti ja ekspordime selle:
-
+* Nagu näha, siis eeldab ühenduse loomine config failis dbConfig kirje olemasolu. Need ühenduseks vajalikud parameetrid peaksid olema jällegi eraldi failis, mida githubi ei salvestata, sest muu hulgas sisaldab näiteks parooli. Selle, kuidas config.js fail välja näeb, saab vaadata config.sample.js failist.
+config.sample.js faili sisu:
 ```javascript
-const db = admin.firestore();
-
-module.exports = db;
-```
-
-* Nagu näha, siis on vaja veel kusagilt saada serviceAccountKey.json fail.
-* Selle saab genereerida vajutades nupule 'Generate new private key', mille peale saab loodud json faili alla laadida.
-* Faili sisu näeb välja umbes selline:
-
-```javascript
-{
-  "type": "service_account",
-  "project_id": "homeworks-62d8f",
-  "private_key_id": "005b0f2c00c629c3dc7c93cec81b9d127b8f90c3",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCYpcph9wV/zxhU\nqdvWg/Qs8aeKV7HeEXqJf7w7LJe+2ChWpzhKqfSkJJu3du/RMLqPB3dOIdtm+pLo\n6+LddwS5ALr0nYB9WS4msvWEDgAfULVQcNzrk4tAAfBMl1nwZUabtFy4nCdaqZP4\njgl7tf/ze7qwM8c7L7GIXRR4CID5vgFWw+lOhT4TB8x4+xT+g9ZWbUj3cIIpXr/y\nEMfWGfXbq0dSZy11lqxEVbISR7PlJVBq6wG9vfKQt51c1gPAh+2ux6JTvrH2Adew\nNorqJrvyircZMvCjfbnqAs/0omMj8FiI6toFVihI0mrVCCu9vWOQQJw+YsNV50/S\nhsQ+5zL3AgMBAAECggEAGWYiAfbw6qPyL8mA6MqqoFJ9RsmcsOSbolv8sqPoLpBs\n9djRHFX3J4YShY5mt5oHZgZ0qtgmAkEt8fpTP00Ec3v+9PYYC8NWUzNyd/c/EfbY\nlHqTEnz0WJbPUw8unzoFa6GxI+PnsHAy9306xWOHzmMHXIuLr6TEl3oADpDrqkzZ\n5pcNlGH64t401R+Q34vZVmFmAxfOn8BG+tslqTN5jlliofUoM2DzlU98wfpWtSEc\ntdaBoHwfPo9mpSoi5ZfGDcsnwD87vynCwTlKtT7J2DTZFuMF3mx5HoDe3pD48fSX\nWxl3kY/IgL7t+DIlG88H1NxQyZhFSnjWF1mQetRA4QKBgQDWJiL1X5mZQkU+C5XB\nDJC+Zus4rfPuRJtoXgIj4w/YTi3YO8fegDVXQKKGYLBfpfroP8tDl5lfDH3aJixg\n5VnYul0Bq0QUFYdqDMBTvJL6hmAsXC3GAkuD+F6l6MviGYMZIHG5nexEQuz6L9hW\nMxMdUBHU8QYX2gOYpI3Weji9uQKBgQC2er5/YSJ4VOe/6kuhH9YeaNzYOuOBA3Lh\nP1YjAo3YlXMk2z+FmTeJnFEh7K2tkAmbSv3jE8ZVYetq7gZNlNRhOzE7LUC5fb+7\nXljHKxm7Z6h8GG8OxMMp1qzZeTmZx0u1ZBpYaN5kyQssRZbRKRhG0RMFtDm3bHhy\ni+afER5OLwKBgQC1sR2v+jCj66o7/jBM3pBgO4oPSOfRnLwOTNScBiaHa61R7Uai\n7TxUjy5VvOtn+7dqHdYjvxgNoNeWoxS8EVutmlEW/WyBbdK6k58KbNB3ZlNqz7q2\naXQQwEXtlhqF9wdX5kMXLXosYGwXyUhPun3ZPPokJWr6CatLczI0avaBYQKBgFNT\n87+pNJtscjOiIw0dw6I5UnfvVEpqr8AKMyRjmzCG9oCjGfvA/qp5Vlc+hATY3Hos\noYlbU1tUDrPSo9AzoVQROqcCQCc0NCS0raetl9+LM1YPtk8xLMnjPSVGBTai2oCn\niJxMrxmo8NAzqu4ybOKRwLT/GsgW4V21YwfKQmODAoGAK7FKO3a5c2wWBuW7NjMo\npTv3xmx47K+iGfNsaKMACmX6B6i7fV194KNo5N6WA6ZPnBu9NnSTPbx0mieOQ4o7\nUBJMGTeB8sxryH13eZmergGj/msEOkqVrbyTyd1nihSn56+5oBN13oQzhb80mc7K\n9wKzK5igPcqx/r41oOUN3KU=\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk-90drc@homeworks-62d8f.iam.gserviceaccount.com",
-  "client_id": "105539293179568718139",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-90drc%40homeworks-62d8f.iam.gserviceaccount.com"
+const config = {
+  port: 3000,
+  jwtSecret: 'secret',
+  dbConfig: {
+    url: 'localhost',
+    user: 'root',
+    password: 'password',
+    database: 'homeworks'
+  }
 }
+
+module.exports = config;
 ```
-
-* Selleks, et saaksime oma projektist andmebaasiga ühendust võtta, on vaja paigaldada oma API-le 'firebase-admin' npm pakk.
-* Selle saame lisada käsuga npm install firebase-admin.
-
-* Kogu protsess on näha siin videos: https://youtu.be/GnufgZZeiCA
-
-
+* Nüüd on võimalik hakata andmebaasi kasutama teenuste all.
 # Viienda loengu teemad (18. detsember)
 * Kodutööde esitlemine
 * Testimine

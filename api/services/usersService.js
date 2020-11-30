@@ -1,82 +1,75 @@
 const hashService = require('./hashService');
-const users = [
-  {
-      id: 0,
-      firstName: 'Juku',
-      lastName: 'Juurikas',
-      email: 'juku@juurikas.ee',
-      password: '$2b$10$0Ij/HJQO1UIejaqBMJMH/OHWgkThGm/QsEiLZbU3n.aU/q9qFVTL6' // password: johndoe
-  },
-  {
-      id: 1,
-      firstName: 'Juhan',
-      lastName: 'Juurikas',
-      email: 'juhan@juurikas.ee',
-      password: '$2b$10$0Ij/HJQO1UIejaqBMJMH/OHWgkThGm/QsEiLZbU3n.aU/q9qFVTL6'
-  }
-];
+const db = require('../../db');
 
 usersService = {};
 
 // Return list of users
-usersService.read = () => {
+usersService.read = async () => {
+  const users = await db.query(`SELECT id, firstName, lastName, email FROM users`);
   return users;
 }
 
-usersService.readByEmail = (email) => {
-  const user = users.find(user => user.email === email);
-  return user;
+usersService.readByEmail = async (email) => {
+  const users = await db.query(`SELECT * FROM users WHERE email = ?`, [email]);
+  return users[0];
 }
 
 // Return user by id
-usersService.readById = (userId) => {
-  return users[userId];
+usersService.readById = async (id) => {
+  const users = await db.query(`SELECT id, firstName, lastName, email FROM users WHERE id = ?`, [id]);
+  return users[0];
 }
 
 // Create user
 usersService.create = async (user) => {
-  user.id = users.length;
   user.password = await hashService.hash(user.password);
   // Add user to 'database'
-  users.push(user);
-
+  const res = await db.query(`INSERT INTO users SET ?`, [user]);
+  if (res.affectedRows === 0) {
+    return false;
+  }
   // Create new json from newUser for response
   const userToReturn = { ... user };
   // Remove password from user data
-  // delete userToReturn.password;
-
+  delete userToReturn.password;
   return userToReturn;
 }
 
-usersService.update = (user) => {
+usersService.update = async (user) => {
+  const userToUpdate = usersService.readById(user.id);
     // Check if optional data exists
     if (user.firstName) {
         // Change user data in 'database'
-        users[user.id].firstName = user.firstName;
+        userToUpdate.firstName = user.firstName;
     }
     // Check if optional data exists
     if (user.lastName) {
         // Change user data in 'database'
-        users[user.id].lastName = user.lastName;
+        userToUpdate.lastName = user.lastName;
     }
     // Check if optional data exists
     if (user.email) {
         // Change user data in 'database'
-        users[user.id].email = user.email;
+        userToUpdate.email = user.email;
     }
     // Check if optional data exists
     if (user.password) {
         // Change user data in 'database'
-        users[user.id].password = user.password;
+        userToUpdate.password = hashService.hash(user.password);
     }
-
-    const updatedUser = { ... users[user.id]};
-    delete updatedUser.password;
-    return updatedUser;
+    delete userToUpdate.id;
+    const res = await db.query(`UPDATE users SET ?`, [userToUpdate]);
+    if (res.affectedRows === 0) {
+      return false;
+    }
+    return true;
 }
 
-usersService.delete = (id) => {
-  users.splice(id, 1);
+usersService.delete = async (id) => {
+  const res = await db.query(`DELETE FROM users WHERE id = ?`, [id]);
+  if (res.affectedRows === 0) {
+    return false;
+  }
   return true;
 }
 
