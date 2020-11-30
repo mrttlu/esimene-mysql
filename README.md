@@ -420,6 +420,31 @@ const config = {
 module.exports = config;
 ```
 * Nüüd on võimalik hakata andmebaasi kasutama teenuste all.
+* Selleks tuleb teenuse all kõigepealt importida andmebaasi ühendus ja siis saab hakata juba päringuid kirjutama
+```javascript
+const hashService = require('./hashService');
+const db = require('../../db');
+
+usersService = {};
+
+// Return list of users
+usersService.read = async () => {
+  const users = await db.query(`SELECT id, firstName, lastName, email FROM users`);
+  return users;
+}
+```
+* SQL-päringute käivitamisel peab meeles pidama seda, et kui päringud sisaldavad kasutaja poolt saadetud infot (näiteks e-mail, parool, ükskõik mida klient API-sse saadab), siis annab see võimaluse kasutada SQL injection rünnakut. (Selle kohta saab lugeda näiteks PortSwigger'i artiklist siit: https://portswigger.net/web-security/sql-injection).
+* SQL injectioni vältimiseks tuleb kasutada parameetrilisi päringuid, kus kasutaja poolt saadetud muutujaid ei kirjutata otse päringusse sisse.
+```javascript
+// Selle asemel, et kirjutada kasutaja poolt saadetud infot otse päringusse kujul:
+const users = await db.query(`SELECT * FROM users WHERE email = email`);
+
+// Tuleks seda teha sellisel kujul:
+const users = await db.query(`SELECT * FROM users WHERE email = ?`, [email]);
+
+// Kui muutujaid on rohkem siis tuleb ikkagi muutujate asemele päringusse kirjutada ? ja pärast [] sisse lihtsalt muutujad komadega eraldatult
+const res = await db.query(`INSERT INTO users SET firstName = ?, lastName = ?, email = ?, password = ?`, [user.firstName, user.lastName, user.email, user.password]);
+```
 # Viienda loengu teemad (18. detsember)
 * Kodutööde esitlemine
 * Testimine
