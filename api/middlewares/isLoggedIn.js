@@ -5,7 +5,8 @@ const isLoggedIn = (req, res, next) => {
     const token = req.headers.authorization.substring(7);
     const verified = jwt.verify(token, config.jwtSecret);
     if (verified) {
-      req.user = verified.email;
+      console.log(verified);
+      req.user = verified.id;
       next();
     }
   } catch (error) {

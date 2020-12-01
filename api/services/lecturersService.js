@@ -1,23 +1,8 @@
-// Database mockup
-const lecturers = [
-  {
-      id: 0,
-      firstName: 'Kalle',
-      lastName: 'Kuld',
-      email: 'kalle.kuld@tlu.ee',
-      userId: 0
-  },
-  {
-      id: 1,
-      firstName: 'Malle',
-      lastName: 'Muld',
-      email: 'malle.muld@tlu.ee',
-      userId: 0
-  },
-];
+const db = require('../../db');
 
 const lecturersService = {
-  read: () => {
+  read: async (userId) => {
+    const lecturers = await db.query(`SELECT id, firstName, lastName, email FROM lecturers WHERE users_id = ?`, [userId]);
     return lecturers;
   },
   readById: (id) => {
@@ -41,6 +26,5 @@ const lecturersService = {
     return true;
   }
 };
-
 
 module.exports = lecturersService;

@@ -8,9 +8,10 @@ const lecturersController = {};
 // Required values: none
 // Optional values: none
 // Returns: status 200 - OK and list of lecturers in response body
-lecturersController.read = (req, res) => {
+lecturersController.read = async (req, res) => {
+    const userId = req.user;
   // Get list of lecturers
-  const lecturers = lectrurersService.read();
+  const lecturers = await lectrurersService.read(userId);
   // Return list of lecturers
   res.status(200).json({
       success: true,
