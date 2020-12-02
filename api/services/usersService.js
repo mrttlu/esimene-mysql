@@ -57,8 +57,8 @@ usersService.update = async (user) => {
         // Change user data in 'database'
         userToUpdate.password = hashService.hash(user.password);
     }
-    delete userToUpdate.id;
-    const res = await db.query(`UPDATE users SET ?`, [userToUpdate]);
+    
+    const res = await db.query(`UPDATE users SET ? WHERE id = ?`, [userToUpdate, user.id]);
     if (res.affectedRows === 0) {
       return false;
     }

@@ -447,7 +447,7 @@ usersController.create = async (req, res) => {
           });
         }
       }
-    ´´´
+      ´´´
 * JWT lisamine projektile on näha siin videos: https://youtu.be/dPuKKJcCGd8
 
 # Neljanda loengu teemad (28. november)

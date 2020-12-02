@@ -1,28 +1,33 @@
 const db = require('../../db');
 
 const lecturersService = {
-  read: async (userId) => {
-    const lecturers = await db.query(`SELECT id, firstName, lastName, email FROM lecturers WHERE users_id = ?`, [userId]);
+  read: async (id) => {
+    const lecturers = await db.query(`SELECT * FROM lecturers WHERE users_id = ?`, [id]);
     return lecturers;
   },
-  readById: (id) => {
-    return lecturers[id];
+  readById: async (id, users_id) => {
+    const lecturers = await db.query(`SELECT * FROM lecturers WHERE id = ?`, [id]);
+    if (lecturers[0].users_id !== users_id) return false;
+    return lecturers[0];
   },
-  create: (lecturer) => {
-    lecturer.id = lecturers.length,
-    // Add lecturer to 'database'
-    lecturers.push(lecturer);
-
-    const lecturerToReturn = { ... lecturer };
-    delete password;
-
-    return lecturerToReturn;
+  create: async (lecturer) => {
+    const res = await db.query(`INSERT INTO lecturers SET ?`, [lecturer]);
+    if (res.affectedRows === 0) return false;
+    return res.insertId;
   },
-  update: () => {
+  update: async (lecturer) => {
+    const lecturerToUpdate = lecturersService.readById(lecturer.id, lecturer.users_id);
+    if (lecturer.firstName) lecturerToUpdate.firstName = lecturer.firstName;
+    if (lecturer.lastName) lecturerToUpdate.lastName = lecturer.lastName;
+    if (lecturer.email) lecturerToUpdate.email = lecturer.email;
 
+    const res = await db.query(`UPDATE lecturers SET ? WHERE id = ?`, [lecturerToUpdate, lecturer.id]);
+    if (res.affectedRows === 0) return false;
+    return true;
   },
-  delete: (id) => {
-    lecturers.splice(id, 1);
+  delete: async (id, userId) => {
+    const res = await db.query(`DELETE FROM lecturers WHERE id = ? AND users_id = ?`, [id, userId]);
+    if (affectedRows === 0) return false;
     return true;
   }
 };
