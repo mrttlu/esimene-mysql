@@ -12,8 +12,8 @@ const lecturersService = {
   },
   create: async (lecturer) => {
     const res = await db.query(`INSERT INTO lecturers SET ?`, [lecturer]);
-    if (res.affectedRows === 0) return false;
-    return res.insertId;
+    if (result.affectedRows === 0) return false;
+    return result.insertId;
   },
   update: async (lecturer) => {
     const lecturerToUpdate = lecturersService.readById(lecturer.id, lecturer.users_id);
@@ -21,13 +21,13 @@ const lecturersService = {
     if (lecturer.lastName) lecturerToUpdate.lastName = lecturer.lastName;
     if (lecturer.email) lecturerToUpdate.email = lecturer.email;
 
-    const res = await db.query(`UPDATE lecturers SET ? WHERE id = ?`, [lecturerToUpdate, lecturer.id]);
-    if (res.affectedRows === 0) return false;
+    const result = await db.query(`UPDATE lecturers SET ? WHERE id = ?`, [lecturerToUpdate, lecturer.id]);
+    if (result.affectedRows === 0) return false;
     return true;
   },
   delete: async (id, userId) => {
-    const res = await db.query(`DELETE FROM lecturers WHERE id = ? AND users_id = ?`, [id, userId]);
-    if (affectedRows === 0) return false;
+    const result = await db.query(`DELETE FROM lecturers WHERE id = ? AND users_id = ?`, [id, userId]);
+    if (result.affectedRows === 0) return false;
     return true;
   }
 };

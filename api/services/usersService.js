@@ -24,15 +24,11 @@ usersService.readById = async (id) => {
 usersService.create = async (user) => {
   user.password = await hashService.hash(user.password);
   // Add user to 'database'
-  const res = await db.query(`INSERT INTO users SET ?`, [user]);
-  if (res.affectedRows === 0) {
+  const result = await db.query(`INSERT INTO users SET ?`, [user]);
+  if (result.affectedRows === 0) {
     return false;
   }
-  // Create new json from newUser for response
-  const userToReturn = { ... user };
-  // Remove password from user data
-  delete userToReturn.password;
-  return userToReturn;
+  return result.insertId;
 }
 
 usersService.update = async (user) => {
@@ -58,16 +54,16 @@ usersService.update = async (user) => {
         userToUpdate.password = hashService.hash(user.password);
     }
     
-    const res = await db.query(`UPDATE users SET ? WHERE id = ?`, [userToUpdate, user.id]);
-    if (res.affectedRows === 0) {
+    const result = await db.query(`UPDATE users SET ? WHERE id = ?`, [userToUpdate, user.id]);
+    if (result.affectedRows === 0) {
       return false;
     }
     return true;
 }
 
 usersService.delete = async (id) => {
-  const res = await db.query(`DELETE FROM users WHERE id = ?`, [id]);
-  if (res.affectedRows === 0) {
+  const result = await db.query(`DELETE FROM users WHERE id = ?`, [id]);
+  if (result.affectedRows === 0) {
     return false;
   }
   return true;

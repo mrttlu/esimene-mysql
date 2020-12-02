@@ -6,9 +6,10 @@ const subjectsController = {};
 // Required values: none
 // Optional values: none
 // Returns: status 200 - OK and list of subjects in response body
-subjectsController.read = (req, res) => {
+subjectsController.read = async (req, res) => {
+  const userId = req.user;
   // Get list of subjects
-  const subjects = subjectsService.read();
+  const subjects = await subjectsService.read(userId);
   // Return list of subjects
   res.status(200).json({
       success: true,
@@ -21,9 +22,10 @@ subjectsController.read = (req, res) => {
 // Required: id
 // Optional: none
 // Returns: status 200 - OK and subject data in response body
-subjectsController.readById = (req, res) => {
+subjectsController.readById = async (req, res) => {
+  const userId = req.user;
   const id = req.params.id;
-  const subject = subjectsService.readById(id);
+  const subject = await subjectsService.readById(id, userId);
   // Return subject with specified id
   res.status(200).json({
       success: true,
@@ -38,26 +40,33 @@ subjectsController.readById = (req, res) => {
 // Returns:
 //  Success: status 201 - Created and lecturer data in response body
 //  Fail: status 400 - Bad Request and error message in response body
-subjectsController.create = (req, res) => {
+subjectsController.create = async (req, res) => {
   // Check if provided data is expected type (typeof) and has length when whitespace is removed (.trim().length)
   const name = typeof(req.body.name) === 'string' && req.body.name.trim().length > 0 ? req.body.name : false;
   const lecturerId = typeof(req.body.lecturerId) === 'number' ? req.body.lecturerId : false;
-  const userId = typeof(req.body.userId) === 'number' ? req.body.userId : false;
+  const userId = req.user;
 
   // Check if required data exists
-  if (name && (lecturerId || lecturerId === 0) && (userId || userId === 0)) {
+  if (name && lecturerId && userId) {
       // Create new json with user data
-      const newSubject = {
+      const subject = {
           name,
-          lecturerId,
-          userId
+          lecturers_id: lecturerId,
+          users_id: userId
       };
-      const subject = subjectsService.create(newSubject);
+      const id = await subjectsService.create(subject);
       // Return data
-      res.status(201).json({
-          success: true,
-          subject
-      });
+      if (id) {
+        res.status(201).json({
+            success: true,
+            subject: id
+        });
+      } else {
+        res.status(500).json({
+            success: false,
+            message: 'Something went wrong while creating new user'
+        });
+      }
   } else {
       // Return error message
       res.status(400).json({
@@ -72,21 +81,34 @@ subjectsController.create = (req, res) => {
 // Required: id
 // Optional: name, lecturerId
 // Returns:
-//  Success: status 200 - OK and subject data in response body
+//  Success: status 200 - OK and subject id
 //  Fail: status 400 - Bad Request and error message in response body
-subjectsController.update = (req, res) => {
+subjectsController.update = async (req, res) => {
   // Next lines checking if provided data is expected type (typeof) and has length when whitespace is removed (.trim().length)
   const id = typeof(req.body.id) === 'number' ? req.body.id : false;
   const name = typeof(req.body.name) === 'string' && req.body.name.trim().length > 0 ? req.body.name : false;
   const lecturerId = typeof(req.body.lecturerId) === 'number' ? req.body.lecturerId : false;
+  const userId = req.user;
   // Check if required data exists
-  if(id || id === 0) {
-      const subject = subjectsService.update({ id, name, lecturerId });
+  if(id && userId) {
+      const subject = {
+          id,
+          name,
+          lecturers_id: lecturerId,
+          users_id: userId
+      };
+      const result = await subjectsService.update(subject);
       // Return updated user data
-      res.status(200).json({
-          success: true,
-          subject
-      });
+      if (result) {
+        res.status(200).json({
+            success: result
+        });
+      } else {
+        res.status(500).json({
+            success: result
+        });
+      }
+
   } else {
       // Return error message
       res.status(400).json({
@@ -103,15 +125,23 @@ subjectsController.update = (req, res) => {
 // Returns:
 //  Success: status 200 - OK and { success: true } message
 //  Fail: status 400 - Bad Request and error message in response body
-subjectsController.delete = (req, res) => {
+subjectsController.delete = async (req, res) => {
+    const userId = req.user;
   // Check if required data exists
   const id = typeof(req.body.id) === 'number' ? req.body.id : false;
-  if(id || id === 0) {
-      const deleted = subjectsService.delete(id);
-      // Return success message
-      res.status(200).json({
-          success: deleted
-      });
+  if(id && userId) {
+      const result = await subjectsService.delete(id, userId);
+      if (result) {
+        // Return success message
+        res.status(200).json({
+            success: result
+        });
+      } else {
+        res.status(500).json({
+            success: result
+        });
+      }
+
   } else {
       // Return error message
       res.status(400).json({

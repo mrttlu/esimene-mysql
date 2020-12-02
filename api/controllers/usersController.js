@@ -82,7 +82,7 @@ usersController.create = async (req, res) => {
 // Required: id
 // Optional: firstName, lastName, email, password
 // Returns:
-//  Success: status 200 - OK and user data in response body
+//  Success: status 200 - OK and user id
 //  Fail: status 400 - Bad Request and error message in response body
 usersController.update = async (req, res) => {
     // Next lines checking if provided data is expected type (typeof) and has length when whitespace is removed (.trim().length)

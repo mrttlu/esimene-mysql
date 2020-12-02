@@ -41,7 +41,7 @@ lecturersController.readById = async (req, res) => {
 // Required values: firstName, lastName, email
 // Optional values: none
 // Returns:
-//  Success: status 201 - Created and lecturer data in response body
+//  Success: status 201 - Created and lecturer id
 //  Fail: status 400 - Bad Request and error message in response body
 lecturersController.create = async (req, res) => {
   // Check if provided data is expected type (typeof) and has length when whitespace is removed (.trim().length)
@@ -97,14 +97,14 @@ lecturersController.update = async (req, res) => {
           email,
           users_id
       };
-      const success = await lecturersService.update(lecturer);
+      const result = await lecturersService.update(lecturer);
       if (res) {
         res.status(200).json({
-            success
+            success: result
         });
       } else {
         res.status(500).json({
-            success
+            success: result
         });
       }
   } else {
