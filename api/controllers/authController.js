@@ -7,8 +7,9 @@ const authController = {};
 // Required values: email, password
 // Optional values: none
 // Returns:
-//  Success: status 200 - Logged in
+//  Success: status 200 and token - Logged in
 //  Fail: status 401 - Not authorized
+//  Fail: status 400 - Required field(s) missing or invalid
 authController.login = async (req, res) => {
   const email = typeof(req.body.email) === 'string' && req.body.email.trim().length > 0 ? req.body.email : false;
   const password = typeof(req.body.password) === 'string' && req.body.password.trim().length > 2 ? req.body.password : false;

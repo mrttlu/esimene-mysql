@@ -6,6 +6,7 @@ const subjectsController = {};
 // Required values: none
 // Optional values: none
 // Returns: status 200 - OK and list of subjects in response body
+// Returns: status 400 - no userId in request
 subjectsController.read = async (req, res) => {
   const userId = req.user;
   if (userId) {
@@ -25,9 +26,11 @@ subjectsController.read = async (req, res) => {
 
 // Endpoint for getting subject specified by id
 // GET - subjects
-// Required: id
+// Required: id, userId (from request)
 // Optional: none
 // Returns: status 200 - OK and subject data in response body
+// Returns: status 400 - No subject found
+// Returns: status 400 - Required field(s) missing or invalid
 subjectsController.readById = async (req, res) => {
   const userId = req.user;
   const id = typeof(parseInt(req.params.id)) === 'number' ? parseInt(req.params.id) : false;
@@ -56,11 +59,12 @@ subjectsController.readById = async (req, res) => {
 
 // Endpoint for creating new subject
 // POST - subjects
-// Required values: name, lecturerId, userId
+// Required values: name, lecturerId, userId (from request)
 // Optional values: none
 // Returns:
-//  Success: status 201 - Created and lecturer data in response body
-//  Fail: status 400 - Bad Request and error message in response body
+//  Success: status 201 - Created and new subject id
+//  Fail: status 400 - Required field(s) missing or invalid
+//  Fail: status 500 - Server error
 subjectsController.create = async (req, res) => {
   // Check if provided data is expected type (typeof) and has length when whitespace is removed (.trim().length)
   const name = typeof(req.body.name) === 'string' && req.body.name.trim().length > 0 ? req.body.name : false;
@@ -100,10 +104,11 @@ subjectsController.create = async (req, res) => {
 // Endpoint for updating subjects specified by id
 // PUT - subjects
 // Required: id
-// Optional: name, lecturerId
+// Optional: name, lecturerId, userId (from request)
 // Returns:
-//  Success: status 200 - OK and subject id
-//  Fail: status 400 - Bad Request and error message in response body
+//  Success: status 200 - OK
+//  Fail: status 400 - Subject does not exists.
+//  Fail: status 400 - Required field(s) missing or invalid
 subjectsController.update = async (req, res) => {
   // Next lines checking if provided data is expected type (typeof) and has length when whitespace is removed (.trim().length)
   const id = typeof(req.body.id) === 'number' ? req.body.id : false;
@@ -135,7 +140,7 @@ subjectsController.update = async (req, res) => {
       // Return error message
       res.status(400).json({
           success: false,
-          message: 'Required field(s) missing or invalid'
+          message: 'Required field(s) missing or invalid.'
       });
   }
 }
@@ -145,8 +150,9 @@ subjectsController.update = async (req, res) => {
 // Required: id
 // Optional: none
 // Returns:
-//  Success: status 200 - OK and { success: true } message
-//  Fail: status 400 - Bad Request and error message in response body
+//  Success: status 200 - OK
+//  Fail: status 400 - No subject found.
+//  Fail: status 400 - Required field(s) missing or invalid.
 subjectsController.delete = async (req, res) => {
     const userId = req.user;
   // Check if required data exists
