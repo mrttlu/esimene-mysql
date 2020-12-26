@@ -10,13 +10,17 @@ usersService.read = async () => {
 }
 
 usersService.readByEmail = async (email) => {
+  if (!email) return false;
   const users = await db.query(`SELECT * FROM users WHERE email = ?`, [email]);
+  if (users.length < 1) return false;
   return users[0];
 }
 
 // Return user by id
 usersService.readById = async (id) => {
+  if (!id) return false;
   const users = await db.query(`SELECT id, firstName, lastName, email FROM users WHERE id = ?`, [id]);
+  if (users.length < 1) return false;
   return users[0];
 }
 

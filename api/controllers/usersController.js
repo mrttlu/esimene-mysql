@@ -24,11 +24,20 @@ usersController.readById = async (req, res) => {
     const userId = req.params.id;
     if (userId) {
         const user = await usersService.readById(userId);
-        // Return user with specified id
-        res.status(200).json({
-            success: true,
-            user: user
-        });
+        if (user) {
+            // Return user with specified id
+            res.status(200).json({
+                success: true,
+                user: user
+            });
+        } else {
+            // Return error message
+            res.status(400).json({
+                success: false,
+                message: 'No user found.'
+            });
+        }
+
     } else {
         res.status(400).json({
             success: false,
@@ -62,11 +71,11 @@ usersController.create = async (req, res) => {
             password
         };
 
-        const newUser = await usersService.create(user);
+        const id = await usersService.create(user);
         // Return data
         res.status(201).json({
             success: true,
-            user: newUser
+            id
         });
     } else {
         // Return error message

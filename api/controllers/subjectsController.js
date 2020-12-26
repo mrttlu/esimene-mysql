@@ -8,13 +8,19 @@ const subjectsController = {};
 // Returns: status 200 - OK and list of subjects in response body
 subjectsController.read = async (req, res) => {
   const userId = req.user;
-  // Get list of subjects
-  const subjects = await subjectsService.read(userId);
-  // Return list of subjects
-  res.status(200).json({
-      success: true,
-      subjects
+  if (userId) {
+    // Get list of subjects
+    const subjects = await subjectsService.read(userId);
+    // Return list of subjects
+    res.status(200).json({
+        success: true,
+        subjects
+    });
+  } else {
+    res.status(400).json({
+      success: false
   });
+  }
 }
 
 // Endpoint for getting subject specified by id
@@ -24,13 +30,28 @@ subjectsController.read = async (req, res) => {
 // Returns: status 200 - OK and subject data in response body
 subjectsController.readById = async (req, res) => {
   const userId = req.user;
-  const id = req.params.id;
-  const subject = await subjectsService.readById(id, userId);
-  // Return subject with specified id
-  res.status(200).json({
-      success: true,
-      subject
+  const id = typeof(parseInt(req.params.id)) === 'number' ? parseInt(req.params.id) : false;
+  if (id) {
+    const subject = await subjectsService.readById(id, userId);
+    if (subject) {
+      // Return subject with specified id
+      res.status(200).json({
+        success: true,
+        subject
+      });
+    } else {
+      // Return error
+      res.status(400).json({
+        success: false,
+        message: 'No subject found'
+      });
+    }
+  } else {
+    res.status(400).json({
+      success: false,
+      message: 'Required field(s) missing or invalid'
   });
+  }
 }
 
 // Endpoint for creating new subject
@@ -59,7 +80,7 @@ subjectsController.create = async (req, res) => {
       if (id) {
         res.status(201).json({
             success: true,
-            subject: id
+            id
         });
       } else {
         res.status(500).json({
@@ -104,8 +125,9 @@ subjectsController.update = async (req, res) => {
             success: result
         });
       } else {
-        res.status(500).json({
-            success: result
+        res.status(400).json({
+            success: false,
+            message: 'Subject does not exists.'
         });
       }
 
@@ -128,7 +150,7 @@ subjectsController.update = async (req, res) => {
 subjectsController.delete = async (req, res) => {
     const userId = req.user;
   // Check if required data exists
-  const id = typeof(req.body.id) === 'number' ? req.body.id : false;
+  const id = typeof(parseInt(req.body.id)) === 'number' ? parseInt(req.body.id) : false;
   if(id && userId) {
       const result = await subjectsService.delete(id, userId);
       if (result) {
@@ -137,8 +159,9 @@ subjectsController.delete = async (req, res) => {
             success: result
         });
       } else {
-        res.status(500).json({
-            success: result
+        res.status(400).json({
+            success: false,
+            message: 'No subject found.'
         });
       }
 
