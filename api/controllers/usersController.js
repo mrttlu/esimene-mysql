@@ -17,9 +17,11 @@ usersController.read = async (req, res) => {
 
 // Endpoint for getting user specified by id
 // GET - users
-// Required: id
+// Required: id, userId (from request)
 // Optional: none
 // Returns: status 200 - OK and user data in response body
+// Returns: status 400 - No user found.
+// Returns: status 400 - No id provided.
 usersController.readById = async (req, res) => {
     const userId = req.params.id;
     if (userId) {
@@ -52,8 +54,8 @@ usersController.readById = async (req, res) => {
 // Required values: firstName, lastName, email, password
 // Optionalvalues: none
 // Returns:
-//  Success: status 201 - Created and user data in response body
-//  Fail: status 400 - Bad Request and error message in response body
+//  Success: status 201 - Created and user id
+//  Fail: status 400 - Required field(s) missing or invalid
 usersController.create = async (req, res) => {
     // Check if provided data is expected type (typeof) and has length when whitespace is removed (.trim().length)
     const firstName = typeof(req.body.firstName) === 'string' && req.body.firstName.trim().length > 0 ? req.body.firstName : false;
@@ -81,7 +83,7 @@ usersController.create = async (req, res) => {
         // Return error message
         res.status(400).json({
             success: false,
-            message: 'Required field(s) missing or invalid'
+            message: 'Required field(s) missing or invalid.'
         });
     }
 }
@@ -91,8 +93,8 @@ usersController.create = async (req, res) => {
 // Required: id
 // Optional: firstName, lastName, email, password
 // Returns:
-//  Success: status 200 - OK and user id
-//  Fail: status 400 - Bad Request and error message in response body
+//  Success: status 200 - OK
+//  Fail: status 400 - Required field(s) missing or invalid
 usersController.update = async (req, res) => {
     // Next lines checking if provided data is expected type (typeof) and has length when whitespace is removed (.trim().length)
     // Ternary operator: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator
@@ -129,7 +131,7 @@ usersController.update = async (req, res) => {
         // Return error message
         res.status(400).json({
             success: false,
-            message: 'Required field(s) missing or invalid'
+            message: 'Required field(s) missing or invalid.'
         });
     }
 }
@@ -139,8 +141,8 @@ usersController.update = async (req, res) => {
 // Required: id
 // Optional: none
 // Returns:
-//  Success: status 200 - OK and { success: true } message
-//  Fail: status 400 - Bad Request and error message in response body
+//  Success: status 200 - OK
+//  Fail: status 400 - Required field(s) missing or invalid.
 usersController.delete = async (req, res) => {
     // Check if required data exists
     const id = typeof(req.body.id) === 'number' ? req.body.id : false;
