@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `homeworks`.`users` (
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `homeworks`.`lecturers` (
@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS `homeworks`.`lecturers` (
   `users_id` INT NOT NULL,
   `email` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_lecturers_users_idx` (`users_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `fk_lecturers_users_idx` (`users_id` ASC),
   CONSTRAINT `fk_lecturers_users`
     FOREIGN KEY (`users_id`)
     REFERENCES `homeworks`.`users` (`id`)
@@ -36,9 +36,9 @@ CREATE TABLE IF NOT EXISTS `homeworks`.`subjects` (
   `users_id` INT NOT NULL,
   `lecturers_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_subjects_users1_idx` (`users_id` ASC) VISIBLE,
-  INDEX `fk_subjects_lecturers1_idx` (`lecturers_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `fk_subjects_users1_idx` (`users_id` ASC),
+  INDEX `fk_subjects_lecturers1_idx` (`lecturers_id` ASC),
   CONSTRAINT `fk_subjects_users1`
     FOREIGN KEY (`users_id`)
     REFERENCES `homeworks`.`users` (`id`)
@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS `homeworks`.`homeworks` (
   `subjects_id` INT NOT NULL,
   `users_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_homeworks_subjects1_idx` (`subjects_id` ASC) VISIBLE,
-  INDEX `fk_homeworks_users1_idx` (`users_id` ASC) VISIBLE,
+  INDEX `fk_homeworks_subjects1_idx` (`subjects_id` ASC),
+  INDEX `fk_homeworks_users1_idx` (`users_id` ASC),
   CONSTRAINT `fk_homeworks_subjects1`
     FOREIGN KEY (`subjects_id`)
     REFERENCES `homeworks`.`subjects` (`id`)
@@ -95,3 +95,14 @@ SELECT h.name, h.description, h.dueDate, s.name, l.email
 		INNER JOIN subjects s ON h.subjects_id
         INNER JOIN lecturers l on s.lecturers_id
 	WHERE h.users_id = 1 AND done = 0;
+    
+SELECT * FROM subjects;
+
+SELECT h.*, s.name, l.email
+                FROM homeworks h
+                  INNER JOIN subjects s ON h.subjects_id = s.id
+                  INNER JOIN lecturers l ON s.lecturers_id = l.id
+                WHERE h.users_id = 1 AND h.id = 1;
+
+SELECT * FROM homeworks;
+

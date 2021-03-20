@@ -1,21 +1,28 @@
 // get the client
 const mysql = require('mysql2');
 const util = require('util');
-const { dbConfig } = require('./config');
+const { db } = require('./config');
 
-// create the connection to database
-const connection = mysql.createConnection({
-  host: dbConfig.host,
-  user: dbConfig.user,
-  password: dbConfig.password,
-  database: dbConfig.database,
-  timezone: 'local',
-  dateStrings: [
-    'DATE', // DATE's are returned as strings (otherwise they would be interpreted as YYYY-MM-DD 00:00:00+00:00)
-    'DATETIME', // DATETIME's return as strings (otherwise they would interpreted as YYYY-MM-DD HH:mm:ss+00:00)
-  ],
+// Create the connection to database
+const pool = mysql.createPool({
+  host: db.host,
+  user: db.user,
+  password: db.password,
+  port: db.port,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
-connection.query = util.promisify(connection.query);
+pool.query(
+  `CREATE SCHEMA IF NOT EXISTS ${db.database}`, () => {
+    pool.query(`USE ${db.database}`, () => {
+      // eslint-disable-next-line no-console
+      console.log('Database in use');
+    });
+  },
+);
 
-module.exports = connection;
+pool.query = util.promisify(pool.query);
+
+module.exports = pool;
