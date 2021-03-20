@@ -17,8 +17,8 @@ const isLoggedIn = require('./api/middlewares/isLoggedIn');
 
 // Middleware required for receiving body from request object as JSON
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-// app.use(logger);
+app.use(express.urlencoded({ extended: true }));
+app.use(logger);
 
 // Routes
 app.get('/api/ping', pingController.ping);

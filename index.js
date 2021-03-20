@@ -4,7 +4,8 @@ const express = require('express');
 const app = express();
 
 const config = require('./config');
-const port = config.port;
+
+const { port } = config;
 
 // Import controllers
 const pingController = require('./api/controllers/pingController');
@@ -20,7 +21,7 @@ const isLoggedIn = require('./api/middlewares/isLoggedIn');
 
 // Middleware required for receiving body from request object as JSON
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(logger);
 
 // Routes
@@ -55,5 +56,6 @@ app.delete('/api/homeworks', homeworksController.delete);
 
 // Start listening
 app.listen(port, () => {
-    console.log('Server running');
+  // eslint-disable-next-line no-console
+  console.log('Server running');
 });

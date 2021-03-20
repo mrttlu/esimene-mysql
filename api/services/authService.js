@@ -1,7 +1,8 @@
+const jwt = require('jsonwebtoken');
 const hashService = require('./hashService');
 const usersService = require('./usersService');
-const jwt = require('jsonwebtoken');
 const config = require('../../config');
+
 const authService = {};
 
 authService.login = async (email, password) => {
@@ -12,12 +13,10 @@ authService.login = async (email, password) => {
       // Generate token
       const token = jwt.sign({ id: user.id }, config.jwtSecret, { expiresIn: 60 * 60 * 24 });
       return token;
-    } else {
-      return false;
     }
-  } else {
     return false;
   }
-}
+  return false;
+};
 
 module.exports = authService;

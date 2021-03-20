@@ -1,32 +1,33 @@
+/* eslint-disable no-undef */
 const { assert } = require('chai');
 const request = require('supertest');
 const app = require('../app');
 
 const user = {
   email: 'peep@peep.ee',
-  password: 'peep'
-}
+  password: 'peep',
+};
 
 const wrongPassword = {
   email: 'juku@juurikas.ee',
-  password: 'juhan'
+  password: 'juhan',
 };
 
 const wrongUser = {
   email: 'juku@juku.ee',
-  password: 'juku'
+  password: 'juku',
 };
 
 const missingEmail = {
-  password: 'juku'
-}
+  password: 'juku',
+};
 
 const missingPassword = {
-  email: 'juku@juku.ee'
-}
+  email: 'juku@juku.ee',
+};
 
-describe('POST /api/login', function() {
-  it('responds with success: true and token', async function() {
+describe('POST /api/login', () => {
+  it('responds with success: true and token', async () => {
     const res = await request(app)
       .post('/api/login')
       .send(user);
@@ -34,7 +35,7 @@ describe('POST /api/login', function() {
     assert.isTrue(res.body.success);
     assert.ok(res.body.token);
   });
-  it('responds with success: false and message because of wrong user', async function() {
+  it('responds with success: false and message because of wrong user', async () => {
     const res = await request(app)
       .post('/api/login')
       .send(wrongUser);
@@ -42,7 +43,7 @@ describe('POST /api/login', function() {
     assert.isFalse(res.body.success);
     assert.ok(res.body.message);
   });
-  it('responds with success: false and message because of wrong password', async function() {
+  it('responds with success: false and message because of wrong password', async () => {
     const res = await request(app)
       .post('/api/login')
       .send(wrongPassword);
@@ -50,7 +51,7 @@ describe('POST /api/login', function() {
     assert.isFalse(res.body.success);
     assert.ok(res.body.message);
   });
-  it('responds with success: false and message because of missing email', async function() {
+  it('responds with success: false and message because of missing email', async () => {
     const res = await request(app)
       .post('/api/login')
       .send(missingEmail);
@@ -58,7 +59,7 @@ describe('POST /api/login', function() {
     assert.isFalse(res.body.success);
     assert.equal(res.body.message, 'Required field(s) missing or invalid');
   });
-  it('responds with success: false and message because of missing password', async function() {
+  it('responds with success: false and message because of missing password', async () => {
     const res = await request(app)
       .post('/api/login')
       .send(missingPassword);

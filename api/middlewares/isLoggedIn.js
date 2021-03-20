@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
+
 const isLoggedIn = async (req, res, next) => {
   try {
     const token = req.headers.authorization ? req.headers.authorization.substring(7) : false;
@@ -10,16 +11,17 @@ const isLoggedIn = async (req, res, next) => {
     } else {
       res.status(401).json({
         success: false,
-        message: 'Invalid or missing token'
+        message: 'Invalid or missing token',
       });
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     res.status(401).json({
       success: false,
-      message: 'Invalid token'
+      message: 'Invalid token',
     });
   }
-}
+};
 
 module.exports = isLoggedIn;

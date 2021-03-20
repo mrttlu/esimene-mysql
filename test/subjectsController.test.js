@@ -1,16 +1,17 @@
-const { assert } = require('chai')
+/* eslint-disable no-undef */
+const { assert } = require('chai');
 const request = require('supertest');
 const app = require('../app');
 const authService = require('../api/services/authService');
 
 const user = {
   email: 'peep@peep.ee',
-  password: 'peep'
-}
+  password: 'peep',
+};
 
 const newSubject = {
   name: 'New subject',
-  lecturerId: 1
+  lecturerId: 1,
 };
 
 let subjectId;
@@ -19,7 +20,6 @@ const lecturerId = 1;
 
 before(async () => {
   token = await authService.login(user.email, user.password);
-  console.log(token);
 });
 
 describe('GET /api/subjects', () => {
@@ -32,7 +32,7 @@ describe('GET /api/subjects', () => {
   it('responds with success: true and list of subjects', async () => {
     const res = await request(app)
       .get('/api/subjects')
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 200);
     assert.isTrue(res.body.success);
     assert.ok(res.body.subjects);
@@ -44,7 +44,7 @@ describe('POST /api/subjects/', () => {
     const res = await request(app)
       .post('/api/subjects')
       .send(newSubject)
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 201);
     assert.isTrue(res.body.success);
     assert.ok(res.body.id);
@@ -54,7 +54,7 @@ describe('POST /api/subjects/', () => {
     const res = await request(app)
       .post('/api/subjects')
       .send({ lecturerId: 'asssass' })
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
     assert.equal(res.body.message, 'Required field(s) missing or invalid');
@@ -63,7 +63,7 @@ describe('POST /api/subjects/', () => {
     const res = await request(app)
       .post('/api/subjects')
       .send({ name: 'asssass' })
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
     assert.equal(res.body.message, 'Required field(s) missing or invalid');
@@ -76,9 +76,9 @@ describe('PUT /api/subjects/', () => {
       .put('/api/subjects')
       .send({
         id: subjectId,
-        name: 'Updated Subject'
+        name: 'Updated Subject',
       })
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 200);
     assert.isTrue(res.body.success);
   });
@@ -87,9 +87,9 @@ describe('PUT /api/subjects/', () => {
       .put('/api/subjects')
       .send({
         id: subjectId,
-        lecturerId: lecturerId
+        lecturerId,
       })
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 200);
     assert.isTrue(res.body.success);
   });
@@ -97,9 +97,9 @@ describe('PUT /api/subjects/', () => {
     const res = await request(app)
       .put('/api/subjects')
       .send({
-        lecturerId: 'Updated Subject'
+        lecturerId: 'Updated Subject',
       })
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
   });
@@ -107,9 +107,9 @@ describe('PUT /api/subjects/', () => {
     const res = await request(app)
       .put('/api/subjects')
       .send({
-        id: 9817398273498273
+        id: 9817398273498273,
       })
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
     assert.equal(res.body.message, 'Subject does not exists.');
@@ -118,9 +118,9 @@ describe('PUT /api/subjects/', () => {
     const res = await request(app)
       .put('/api/subjects')
       .send({
-        lecturerId: 'Updated Subject'
+        lecturerId: 'Updated Subject',
       })
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
   });
@@ -129,8 +129,8 @@ describe('PUT /api/subjects/', () => {
 describe('GET /api/subjects/:id', () => {
   it('responds with success: true and subject', async () => {
     const res = await request(app)
-      .get('/api/subjects/' + subjectId)
-      .set('Authorization', 'Bearer ' + token);
+      .get(`/api/subjects/${subjectId}`)
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 200);
     assert.isTrue(res.body.success);
     assert.ok(res.body.subject);
@@ -138,7 +138,7 @@ describe('GET /api/subjects/:id', () => {
   it('responds with success: false because of nonexisting subject', async () => {
     const res = await request(app)
       .get('/api/subjects/asasasa')
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
   });
@@ -149,16 +149,16 @@ describe('DELETE /api/subjects/', () => {
     const res = await request(app)
       .delete('/api/subjects')
       .send({ id: subjectId })
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 200);
     assert.isTrue(res.body.success);
   });
   it('responds with success: false because of nonexisting subject', async () => {
-    const nonexistingSubject = { id: 09090909 };
+    const nonexistingSubject = { id: 9090909 };
     const res = await request(app)
       .delete('/api/subjects')
       .send(nonexistingSubject)
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
     assert.equal(res.body.message, 'No subject found.');
@@ -166,7 +166,7 @@ describe('DELETE /api/subjects/', () => {
   it('responds with success: false because of missing id', async () => {
     const res = await request(app)
       .delete('/api/subjects')
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
     assert.equal(res.body.message, 'Required field(s) missing or invalid');

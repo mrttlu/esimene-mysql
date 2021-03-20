@@ -1,4 +1,5 @@
 const subjectsService = require('../services/subjectsService');
+
 const subjectsController = {};
 
 // Endpoint for getting list of available subjects
@@ -14,15 +15,15 @@ subjectsController.read = async (req, res) => {
     const subjects = await subjectsService.read(userId);
     // Return list of subjects
     res.status(200).json({
-        success: true,
-        subjects
+      success: true,
+      subjects,
     });
   } else {
     res.status(400).json({
-      success: false
-  });
+      success: false,
+    });
   }
-}
+};
 
 // Endpoint for getting subject specified by id
 // GET - subjects
@@ -33,29 +34,29 @@ subjectsController.read = async (req, res) => {
 // Returns: status 400 - Required field(s) missing or invalid
 subjectsController.readById = async (req, res) => {
   const userId = req.user;
-  const id = typeof(parseInt(req.params.id)) === 'number' ? parseInt(req.params.id) : false;
+  const id = typeof (parseInt(req.params.id, 10)) === 'number' ? parseInt(req.params.id, 10) : false;
   if (id) {
     const subject = await subjectsService.readById(id, userId);
     if (subject) {
       // Return subject with specified id
       res.status(200).json({
         success: true,
-        subject
+        subject,
       });
     } else {
       // Return error
       res.status(400).json({
         success: false,
-        message: 'No subject found'
+        message: 'No subject found',
       });
     }
   } else {
     res.status(400).json({
       success: false,
-      message: 'Required field(s) missing or invalid'
-  });
+      message: 'Required field(s) missing or invalid',
+    });
   }
-}
+};
 
 // Endpoint for creating new subject
 // POST - subjects
@@ -66,40 +67,41 @@ subjectsController.readById = async (req, res) => {
 //  Fail: status 400 - Required field(s) missing or invalid
 //  Fail: status 500 - Server error
 subjectsController.create = async (req, res) => {
-  // Check if provided data is expected type (typeof) and has length when whitespace is removed (.trim().length)
-  const name = typeof(req.body.name) === 'string' && req.body.name.trim().length > 0 ? req.body.name : false;
-  const lecturerId = typeof(req.body.lecturerId) === 'number' ? req.body.lecturerId : false;
+  // Check if provided data is expected type (typeof)
+  // and has length when whitespace is removed (.trim().length)
+  const name = typeof (req.body.name) === 'string' && req.body.name.trim().length > 0 ? req.body.name : false;
+  const lecturerId = typeof (req.body.lecturerId) === 'number' ? req.body.lecturerId : false;
   const userId = req.user;
 
   // Check if required data exists
   if (name && lecturerId && userId) {
-      // Create new json with user data
-      const subject = {
-          name,
-          lecturers_id: lecturerId,
-          users_id: userId
-      };
-      const id = await subjectsService.create(subject);
-      // Return data
-      if (id) {
-        res.status(201).json({
-            success: true,
-            id
-        });
-      } else {
-        res.status(500).json({
-            success: false,
-            message: 'Something went wrong while creating new user'
-        });
-      }
-  } else {
-      // Return error message
-      res.status(400).json({
-          success: false,
-          message: 'Required field(s) missing or invalid'
+    // Create new json with user data
+    const subject = {
+      name,
+      lecturers_id: lecturerId,
+      users_id: userId,
+    };
+    const id = await subjectsService.create(subject);
+    // Return data
+    if (id) {
+      res.status(201).json({
+        success: true,
+        id,
       });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: 'Something went wrong while creating new user',
+      });
+    }
+  } else {
+    // Return error message
+    res.status(400).json({
+      success: false,
+      message: 'Required field(s) missing or invalid',
+    });
   }
-}
+};
 
 // Endpoint for updating subjects specified by id
 // PUT - subjects
@@ -110,40 +112,40 @@ subjectsController.create = async (req, res) => {
 //  Fail: status 400 - Subject does not exists.
 //  Fail: status 400 - Required field(s) missing or invalid
 subjectsController.update = async (req, res) => {
-  // Next lines checking if provided data is expected type (typeof) and has length when whitespace is removed (.trim().length)
-  const id = typeof(req.body.id) === 'number' ? req.body.id : false;
-  const name = typeof(req.body.name) === 'string' && req.body.name.trim().length > 0 ? req.body.name : false;
-  const lecturerId = typeof(req.body.lecturerId) === 'number' ? req.body.lecturerId : false;
+  // Next lines checking if provided data is expected type (typeof)
+  // and has length when whitespace is removed (.trim().length)
+  const id = typeof (req.body.id) === 'number' ? req.body.id : false;
+  const name = typeof (req.body.name) === 'string' && req.body.name.trim().length > 0 ? req.body.name : false;
+  const lecturerId = typeof (req.body.lecturerId) === 'number' ? req.body.lecturerId : false;
   const userId = req.user;
   // Check if required data exists
-  if(id && userId) {
-      const subject = {
-          id,
-          name,
-          lecturers_id: lecturerId,
-          users_id: userId
-      };
-      const result = await subjectsService.update(subject);
-      // Return updated user data
-      if (result) {
-        res.status(200).json({
-            success: result
-        });
-      } else {
-        res.status(400).json({
-            success: false,
-            message: 'Subject does not exists.'
-        });
-      }
-
-  } else {
-      // Return error message
-      res.status(400).json({
-          success: false,
-          message: 'Required field(s) missing or invalid.'
+  if (id && userId) {
+    const subject = {
+      id,
+      name,
+      lecturers_id: lecturerId,
+      users_id: userId,
+    };
+    const result = await subjectsService.update(subject);
+    // Return updated user data
+    if (result) {
+      res.status(200).json({
+        success: result,
       });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: 'Subject does not exists.',
+      });
+    }
+  } else {
+    // Return error message
+    res.status(400).json({
+      success: false,
+      message: 'Required field(s) missing or invalid.',
+    });
   }
-}
+};
 
 // Endpoint for deleting subject specified by id
 // DELETE - subjects
@@ -154,30 +156,29 @@ subjectsController.update = async (req, res) => {
 //  Fail: status 400 - No subject found.
 //  Fail: status 400 - Required field(s) missing or invalid.
 subjectsController.delete = async (req, res) => {
-    const userId = req.user;
+  const userId = req.user;
   // Check if required data exists
-  const id = typeof(parseInt(req.body.id)) === 'number' ? parseInt(req.body.id) : false;
-  if(id && userId) {
-      const result = await subjectsService.delete(id, userId);
-      if (result) {
-        // Return success message
-        res.status(200).json({
-            success: result
-        });
-      } else {
-        res.status(400).json({
-            success: false,
-            message: 'No subject found.'
-        });
-      }
-
-  } else {
-      // Return error message
-      res.status(400).json({
-          success: false,
-          message: 'Required field(s) missing or invalid'
+  const id = typeof (parseInt(req.body.id, 10)) === 'number' ? parseInt(req.body.id, 10) : false;
+  if (id && userId) {
+    const result = await subjectsService.delete(id, userId);
+    if (result) {
+      // Return success message
+      res.status(200).json({
+        success: result,
       });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: 'No subject found.',
+      });
+    }
+  } else {
+    // Return error message
+    res.status(400).json({
+      success: false,
+      message: 'Required field(s) missing or invalid',
+    });
   }
-}
+};
 
 module.exports = subjectsController;

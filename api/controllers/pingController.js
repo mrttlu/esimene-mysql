@@ -7,7 +7,7 @@ const pingController = {};
 // Returns: status 200 - OK and { success: true } message
 pingController.ping = (req, res) => {
   res.status(200).json({
-      success: true
+    success: true,
   });
 };
 

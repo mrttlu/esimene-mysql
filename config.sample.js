@@ -5,8 +5,8 @@ const config = {
     url: 'localhost',
     user: 'root',
     password: 'password',
-    database: 'homeworks'
-  }
-}
+    database: 'homeworks',
+  },
+};
 
 module.exports = config;

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { assert } = require('chai');
 const request = require('supertest');
 const app = require('../app');
@@ -7,14 +8,14 @@ const path = '/api/users';
 
 const user = {
   email: 'peep@peep.ee',
-  password: 'peep'
-}
+  password: 'peep',
+};
 
 const newUser = {
   firstName: 'Uncle',
   lastName: 'Heino',
   email: 'uncle@heino.ee',
-  password: 'uncle'
+  password: 'uncle',
 };
 
 const nonExistingUserId = 'lksjdflksjdflksjd';
@@ -25,7 +26,7 @@ before(async () => {
   token = await authService.login(user.email, user.password);
 });
 
-describe(`POST ${ path }`, () => {
+describe(`POST ${path}`, () => {
   it('creates new user and responds with success: true and userId', async () => {
     const res = await request(app)
       .post(path)
@@ -41,7 +42,7 @@ describe(`POST ${ path }`, () => {
       .send({
         firstName: 'firstName',
         lastName: 'lastName',
-        email: 'email'
+        email: 'email',
       });
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
@@ -52,7 +53,7 @@ describe(`POST ${ path }`, () => {
       .send({
         firstName: 'firstName',
         lastName: 'lastName',
-        password: 'password'
+        password: 'password',
       });
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
@@ -63,7 +64,7 @@ describe(`POST ${ path }`, () => {
       .send({
         lastName: 'lastName',
         email: 'email',
-        password: 'password'
+        password: 'password',
       });
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
@@ -74,7 +75,7 @@ describe(`POST ${ path }`, () => {
       .send({
         firstName: 'firstName',
         email: 'email',
-        password: 'password'
+        password: 'password',
       });
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
@@ -87,14 +88,14 @@ describe(`POST ${ path }`, () => {
   });
 });
 
-describe(`PUT ${ path }`, () => {
+describe(`PUT ${path}`, () => {
   it('updates users firstName and responds with success: true', async () => {
     const res = await request(app)
       .put(path)
-      .set('Authorization', 'Bearer ' + token)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         id: userId,
-        firstName: 'Onu'
+        firstName: 'Onu',
       });
     assert.equal(res.statusCode, 200);
     assert.isTrue(res.body.success);
@@ -102,10 +103,10 @@ describe(`PUT ${ path }`, () => {
   it('updates users lastName and responds with success: true', async () => {
     const res = await request(app)
       .put(path)
-      .set('Authorization', 'Bearer ' + token)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         id: userId,
-        lastName: 'Paul'
+        lastName: 'Paul',
       });
     assert.equal(res.statusCode, 200);
     assert.isTrue(res.body.success);
@@ -113,10 +114,10 @@ describe(`PUT ${ path }`, () => {
   it('updates users email and responds with success: true', async () => {
     const res = await request(app)
       .put(path)
-      .set('Authorization', 'Bearer ' + token)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         id: userId,
-        email: 'uncle@paul.ee'
+        email: 'uncle@paul.ee',
       });
     assert.equal(res.statusCode, 200);
     assert.isTrue(res.body.success);
@@ -124,10 +125,10 @@ describe(`PUT ${ path }`, () => {
   it('updates users password and responds with success: true', async () => {
     const res = await request(app)
       .put(path)
-      .set('Authorization', 'Bearer ' + token)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         id: userId,
-        password: 'wosspard'
+        password: 'wosspard',
       });
     assert.equal(res.statusCode, 200);
     assert.isTrue(res.body.success);
@@ -135,10 +136,10 @@ describe(`PUT ${ path }`, () => {
   it('responds with success: false because of nonexisting user', async () => {
     const res = await request(app)
       .put(path)
-      .set('Authorization', 'Bearer ' + token)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         id: nonExistingUserId,
-        firstName: 'Onu'
+        firstName: 'Onu',
       });
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
@@ -146,56 +147,56 @@ describe(`PUT ${ path }`, () => {
   it('responds with success: false because of no id', async () => {
     const res = await request(app)
       .put(path)
-      .set('Authorization', 'Bearer ' + token)
+      .set('Authorization', `Bearer ${token}`)
       .send({
-        firstName: 'Onu'
+        firstName: 'Onu',
       });
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
   });
 });
 
-describe(`GET ${ path }`, () => {
+describe(`GET ${path}`, () => {
   it('Responds with success: true and list of users', async () => {
     const res = await request(app)
       .get(path)
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 200);
     assert.isTrue(res.body.success);
     assert.ok(res.body.users);
   });
 });
 
-describe(`GET ${ path }/:id`, () => {
+describe(`GET ${path}/:id`, () => {
   it('Responds with success: true and user data', async () => {
     const res = await request(app)
-      .get(`${ path }/${ userId }`)
-      .set('Authorization', 'Bearer ' + token);
+      .get(`${path}/${userId}`)
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 200);
     assert.isTrue(res.body.success);
     assert.ok(res.body.user);
   });
   it('Responds with success: false because of nonexisting user', async () => {
     const res = await request(app)
-      .get(`${ path }/${ nonExistingUserId }`)
-      .set('Authorization', 'Bearer ' + token);
+      .get(`${path}/${nonExistingUserId}`)
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
   });
   it('Responds with success: false because of nonvalid id', async () => {
     const res = await request(app)
-      .get(`${ path }/aa`)
-      .set('Authorization', 'Bearer ' + token);
+      .get(`${path}/aa`)
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
   });
 });
 
-describe(`DELETE ${ path }`, () => {
+describe(`DELETE ${path}`, () => {
   it('deletes created user and responds with success: true', async () => {
     const res = await request(app)
       .delete(path)
-      .set('Authorization', 'Bearer ' + token)
+      .set('Authorization', `Bearer ${token}`)
       .send({ id: userId });
     assert.equal(res.statusCode, 200);
     assert.isTrue(res.body.success);
@@ -203,7 +204,7 @@ describe(`DELETE ${ path }`, () => {
   it('responds with success: false because of nonexisting user', async () => {
     const res = await request(app)
       .delete(path)
-      .set('Authorization', 'Bearer ' + token)
+      .set('Authorization', `Bearer ${token}`)
       .send({ id: nonExistingUserId });
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
@@ -211,9 +212,8 @@ describe(`DELETE ${ path }`, () => {
   it('responds with success: false because of  no id', async () => {
     const res = await request(app)
       .delete(path)
-      .set('Authorization', 'Bearer ' + token);
+      .set('Authorization', `Bearer ${token}`);
     assert.equal(res.statusCode, 400);
     assert.isFalse(res.body.success);
   });
 });
-
