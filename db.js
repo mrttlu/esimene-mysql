@@ -1,6 +1,8 @@
+/* eslint-disable no-console */
 // get the client
 const mysql = require('mysql2');
 const util = require('util');
+
 const { db } = require('./config');
 
 // Create the connection to database
@@ -15,10 +17,10 @@ const pool = mysql.createPool({
 });
 
 pool.query(
-  `CREATE SCHEMA IF NOT EXISTS ${db.database}`, () => {
+  `CREATE SCHEMA IF NOT EXISTS ${db.database}`, (error) => {
+    if (error) console.error(`Database creation error: ${error}`);
     pool.query(`USE ${db.database}`, () => {
-      // eslint-disable-next-line no-console
-      console.log('Database in use');
+      console.log(`Using database ${db.database}`);
     });
   },
 );

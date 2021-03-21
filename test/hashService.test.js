@@ -3,9 +3,14 @@ const { assert } = require('chai');
 const bcrypt = require('bcrypt');
 const { saltRounds } = require('../config');
 const hashService = require('../api/services/hashService');
+const create = require('../api/helpers/createAndSeedTables');
 
 const password = 'sigrimigri';
 const wrongPassword = 'migrisigri';
+
+before(async () => {
+  await create();
+});
 
 describe('Hash Service', () => {
   describe('Hashing', () => {

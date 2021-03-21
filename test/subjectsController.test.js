@@ -3,6 +3,7 @@ const { assert } = require('chai');
 const request = require('supertest');
 const app = require('../app');
 const authService = require('../api/services/authService');
+const create = require('../api/helpers/createAndSeedTables');
 
 const user = {
   email: 'peep@peep.ee',
@@ -19,6 +20,7 @@ let token;
 const lecturerId = 1;
 
 before(async () => {
+  await create();
   token = await authService.login(user.email, user.password);
 });
 

@@ -1,8 +1,13 @@
 /* eslint-disable no-undef */
 const { assert } = require('chai');
 const subjectsService = require('../api/services/subjectsService');
+const create = require('../api/helpers/createAndSeedTables');
 
 const userId = 1;
+
+before(async () => {
+  await create();
+});
 
 describe('Subjects service', () => {
   describe('Read', () => {

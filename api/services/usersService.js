@@ -5,8 +5,12 @@ const usersService = {};
 
 // Return list of users
 usersService.read = async () => {
-  const users = await db.query('SELECT id, firstName, lastName, email FROM users');
-  return users;
+  try {
+    const users = await db.query('SELECT id, firstName, lastName, email FROM users');
+    return users;
+  } catch (error) {
+    return error.message;
+  }
 };
 
 usersService.readByEmail = async (email) => {

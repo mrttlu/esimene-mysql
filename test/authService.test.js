@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 const { assert } = require('chai');
 const authService = require('../api/services/authService');
+const create = require('../api/helpers/createAndSeedTables');
 
 const correctUser = {
   email: 'peep@peep.ee',
@@ -11,6 +12,10 @@ const inCorrectUser = {
   email: 'nonexisting@email.ee',
   password: 'wrongPassword',
 };
+
+before(async () => {
+  await create();
+});
 
 describe('Auth service', () => {
   describe('Login', () => {

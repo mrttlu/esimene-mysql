@@ -2,6 +2,7 @@
 const { assert } = require('chai');
 const request = require('supertest');
 const app = require('../app');
+const create = require('../api/helpers/createAndSeedTables');
 
 const user = {
   email: 'peep@peep.ee',
@@ -25,6 +26,10 @@ const missingEmail = {
 const missingPassword = {
   email: 'juku@juku.ee',
 };
+
+before(async () => {
+  await create();
+});
 
 describe('POST /api/login', () => {
   it('responds with success: true and token', async () => {
